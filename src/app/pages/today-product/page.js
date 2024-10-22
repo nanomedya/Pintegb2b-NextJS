@@ -4,9 +4,9 @@ import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
-import { Popconfirm, Table, Tooltip, Button as Button2 } from "antd";
+import { Table, Tooltip, Button as Button2 } from "antd";
 import { list, carsGroup } from "@/app/data/search_data";
-import { Edit2, Eye, Search, ShoppingCart, Trash2 } from "react-feather";
+import { Eye, Search, ShoppingCart } from "react-feather";
 import { Button, Checkbox, Input, Modal, ModalHeader, ModalBody, ModalFooter, Select, SelectItem, Tab, Tabs, useDisclosure, ModalContent } from "@nextui-org/react";
 
 export default function TodayProduct() {

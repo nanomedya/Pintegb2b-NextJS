@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useEffect } from "react";
 import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, User, Tooltip } from "@nextui-org/react";
 import AcmeLogo from "./AcmeLogo.jsx";
 import { Bell, Box, CreditCard, FileText, Home, List, ShoppingCart } from "react-feather";
@@ -7,7 +7,13 @@ import { MenuItem } from "../Elements/MenuItem.js";
 
 export default function NavbarWrapper() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  let path = window.location.pathname;
+  const [path, setPath] = React.useState("");
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setPath(window.location.pathname);
+    }
+  }, []);
 
   const menuItems = [
     { label: "Anasayfa", link: "home" },
@@ -17,8 +23,6 @@ export default function NavbarWrapper() {
     { label: "Cari Hesap", link: "" },
     { label: "Ödeme Yap", link: "pay" },
   ];
-
-  console.log(path.includes("pages/orders"))
 
   return (
     <Navbar

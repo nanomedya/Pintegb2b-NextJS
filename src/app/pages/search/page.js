@@ -1,17 +1,15 @@
 "use client"
 import React from "react";
-import { Input, Tabs, Tab, Card, CardBody, Select, SelectItem, Checkbox, Button, Link } from "@nextui-org/react";
+import { Input, Tabs, Tab, Select, SelectItem, Checkbox, Button, Link } from "@nextui-org/react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Slider from "@/components/Items/Slider";
 import { Search } from "react-feather";
-import ProductTable from "@/components/Items/Table";
 import Cardd from "@/components/Items/Card";
 import { list, carsGroup } from "@/app/data/search_data";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
-import BankAccounts from "@/components/Items/BankAccounts";
 
 export default function SearchPage() {
   const images = [
