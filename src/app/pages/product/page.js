@@ -4,14 +4,13 @@ import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
-import { Table, Tooltip, Button as Button2 } from "antd";
+import { Table, Tooltip, Button as Button2, Popconfirm, Menu, Dropdown } from "antd";
 import { list, carsGroup } from "@/app/data/search_data";
-import {  Eye, Search, ShoppingCart } from "react-feather";
-import { Button, Checkbox, Input, Modal, ModalHeader, ModalBody, ModalFooter, Select, SelectItem, Tab, Tabs, useDisclosure, ModalContent } from "@nextui-org/react";
+import { Circle, Edit2, Info, RefreshCcw, Search, Star, Trash2, Truck } from "react-feather";
+import { Button, Checkbox, Input, Select, SelectItem, Tab, Tabs } from "@nextui-org/react";
 
 export default function Product() {
   const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const images = [
     {
@@ -42,11 +41,11 @@ export default function Product() {
   ]
 
   const DATA = [
-    { "logo": "/items/c1.png", "productID": 1, "title": "Deneme", "code": "XF53FG", "name": "Deneme Ürün", "stock": 145, "price": 1305 },
-    { "logo": "/items/c2.png", "productID": 2, "title": "Deneme2", "code": "XF53FG", "name": "Deneme Ürün2", "stock": 145, "price": 1305 },
-    { "logo": "/items/c3.png", "productID": 3, "title": "Deneme3", "code": "XF53FG", "name": "Deneme Ürün3", "stock": 145, "price": 1305 },
-    { "logo": "/items/c4.png", "productID": 4, "title": "Deneme4", "code": "XF53FG", "name": "Deneme Ürün4", "stock": 145, "price": 1305 },
-    { "logo": "/items/c5.png", "productID": 5, "title": "Deneme5", "code": "XF53FG", "name": "Deneme Ürün5", "stock": 145, "price": 1305 },
+    { "logo": "/items/c1.png", "piece": 1, "kdvSurprize": false, "discount": "", "isNot": true, "offer": false, "cityStatus": true, "city": "Ankara", "productID": 1, "title": "Deneme", "code": "XF53FG", "name": "Deneme Ürün", "stock": 145, "price": 1305 },
+    { "logo": "/items/c2.png", "piece": 2, "kdvSurprize": true, "discount": "10+6", "isNot": false, "offer": true, "cityStatus": false, "city": "İstanbul", "productID": 2, "title": "Deneme2", "code": "XF53FG", "name": "Deneme Ürün2", "stock": 145, "price": 1305 },
+    { "logo": "/items/c3.png", "piece": 3, "kdvSurprize": false, "discount": "", "isNot": true, "offer": false, "cityStatus": true, "city": "İzmir", "productID": 3, "title": "Deneme3", "code": "XF53FG", "name": "Deneme Ürün3", "stock": 145, "price": 1305 },
+    { "logo": "/items/c4.png", "piece": 4, "kdvSurprize": true, "discount": "", "isNot": false, "offer": true, "cityStatus": false, "city": "Ankara", "productID": 4, "title": "Deneme4", "code": "XF53FG", "name": "Deneme Ürün4", "stock": 145, "price": 1305 },
+    { "logo": "/items/c5.png", "piece": 5, "kdvSurprize": false, "discount": "20+2", "isNot": true, "offer": false, "cityStatus": true, "city": "İstanbul", "productID": 5, "title": "Deneme5", "code": "XF53FG", "name": "Deneme Ürün5", "stock": 145, "price": 1305 },
   ]
 
   const onSelectChange = (newSelectedRowKeys) => {
@@ -58,53 +57,142 @@ export default function Product() {
     onChange: onSelectChange,
   };
 
+  const infoProp = () => {
+    return (
+      <div className="p-3">
+        <div className="bg-warning p-2 rounded-xl"><h3>Kapı Cam Fitili</h3></div>
+        <div className="mt-2"><strong>Kodu: </strong><span>XF53FG</span></div>
+        <div className="mt-2"><strong>Satın alınan adet: </strong><span>3</span></div>
+        <div className="mt-2"><strong>KDV'siz adet fiyatı: </strong><span>3040 ₺</span></div>
+        <div className="mt-2 text-warning"><strong>KDV'li adet fiyatı: </strong><span>3040 ₺</span></div>
+      </div>
+    )
+  }
+
+  const priceInfoProp = () => {
+    return (
+      <div className="p-3">
+        <div className="bg-warning p-2 rounded-xl"><h3>Fiyat Bilgileri</h3></div>
+        <div className="mt-2"><strong>Satın alınan adet: </strong><span>3</span></div>
+        <div className="mt-2"><strong>KDV'siz adet fiyatı: </strong><span>3040 ₺</span></div>
+        <div className="mt-2 text-warning"><strong>KDV'li adet fiyatı: </strong><span>3040 ₺</span></div>
+      </div>
+    )
+  }
+
+  const offerProp = () => {
+    return (
+      <div className="p-3">
+        <div className="bg-warning p-2 rounded-xl"><h3>Son Alış Fiyatınız</h3></div>
+        <div className="mt-2"><strong>Tarih: </strong><span>12.12.2020</span></div>
+        <div className="mt-2"><strong>Satın alınan adet: </strong><span>3</span></div>
+        <div className="mt-2"><strong>KDV'siz adet fiyatı: </strong><span>3040 ₺</span></div>
+        <div className="mt-2 text-warning"><strong>KDV'li adet fiyatı: </strong><span>3040 ₺</span></div>
+      </div>
+    )
+  }
+
+  const editMenu = (
+    <Menu>
+      <Menu.Item key="1"><Circle size={13} className="mr-2" /> Takip Et</Menu.Item>
+      <Menu.Item key="2"><Circle size={13} className="mr-2" /> Karşılaştırmaya Ekle</Menu.Item>
+      <Menu.Item key="3"><Circle size={13} className="mr-2" /> Transfer Et</Menu.Item>
+      <Menu.Item key="4"><Circle size={13} className="mr-2" /> Fiyat Karşılaştır</Menu.Item>
+    </Menu>
+  );
+
   const columns = [
     {
-      title: "",
+      title: <div className="w-100 flex justify-center"><Info size={15} /></div>,
       key: "productID",
-      width: 70,
-      render: (e) => <img src={e.logo} alt="" style={{ width: 50 }} />
+      width: 40,
+      render: (e) => <Tooltip title={infoProp}><div><Info size={15} /></div></Tooltip>
     },
     {
-      title: "ID",
+      title: <div className="w-100 flex justify-center"><Truck size={20} /></div>,
       key: "productID",
-      dataIndex: "productID",
-      width: 30
+      width: 30,
+      render: (e) => <div className={e.cityStatus ? "bg-success rounded px-2 py-1 text-white text-center" : "bg-danger rounded px-2 py-1 text-white text-center"}>{e.city}</div>
     },
     {
-      title: "Ürün Kodu",
+      title: "Kodu",
       key: "code",
       render: (e) => <span className="text-gray-500 font-sans">{e.code}</span>
     },
     {
-      title: "Ürün Adı",
+      title: "Adı",
       key: "name",
-      render: (e) => <span className="text-gray-500 font-sans">{e.name}</span>
+      render: (e) => <div><div><span className="text-gray-500 font-sans">{e.name}</span></div>{e.offer ? <div className="bg-success text-white rounded px-1 text-center mt-1">Kampanya</div> : null}</div>
     },
     {
-      title: "Stok",
+      title: "Üretici",
+      key: "code",
+      render: (e) => <span className="text-gray-500 font-sans">{e.code}</span>
+    },
+    {
+      title: "Oem No",
+      key: "code",
+      render: (e) => <span className="text-gray-500 font-sans">{e.code}</span>
+    },
+    {
+      title: "İzmir",
       key: "stock",
-      render: (e) => <span className="text-gray-500 font-sans">{e.stock}</span>
+      width: 40,
+      render: (e) => <div style={{ width: 40 }} className={e.isNot ? "bg-success text-white p-1 rounded-xl text-center" : "bg-danger rounded-xl text-white p-1 text-center"}><span className="text-white font-sans">{e.isNot ? "Var" : "Yok"}</span></div>
     },
     {
-      title: "Fiyat",
+      title: "Ankara",
       key: "price",
+      width: 40,
+      render: (e) => <div style={{ width: 40 }} className={e.isNot ? "bg-success text-white p-1 rounded-xl text-center" : "bg-danger rounded-xl text-white p-1 text-center"}><span className="text-white font-sans">{e.isNot ? "Var" : "Yok"}</span></div>
+    },
+    {
+      title: "İstanbul",
+      key: "title",
+      width: 40,
+      render: (e) => <div style={{ width: 40 }} className={e.isNot ? "bg-success text-white p-1 rounded-xl text-center" : "bg-danger rounded-xl text-white p-1 text-center"}><span className="text-white font-sans">{e.isNot ? "Var" : "Yok"}</span></div>
+    },
+    {
+      title: "1. Sanayi",
+      key: "name",
+      width: 40,
+      render: (e) => <div style={{ width: 40 }} className={e.isNot ? "bg-success text-white p-1 rounded-xl text-center" : "bg-danger rounded-xl text-white p-1 text-center"}><span className="text-white font-sans">{e.isNot ? "Var" : "Yok"}</span></div>
+    },
+    {
+      title: "Ted",
+      key: "title",
+      width: 40,
+      render: (e) => <div style={{ width: 40 }} className={e.isNot ? "bg-success text-white p-1 rounded-xl text-center" : "bg-danger rounded-xl text-white p-1 text-center"}><span className="text-white font-sans">{e.isNot ? "Var" : "Yok"}</span></div>
+    },
+    {
+      title: "İskonto",
+      key: "discount",
+      width: 40,
+      render: (e) => <div className="bg-warning rounded text-white text-center">{e.discount === "" ? "" : e.discount}</div>
+    },
+    {
+      title: "Kdv Hariç Fiyatı ₺",
+      key: "price",
+      width: 100,
+      render: (e) => <div className="w-full">{e.kdvSurprize ? <div className="w-full flex justify-end"><Tooltip title={offerProp}><Star color="red" size={15} /></Tooltip></div> : false}<div className="w-full flex justify-end mr-2">{e.price} ₺</div></div>
+    },
+    {
+      title: "Kdv Dahil Fiyatı ₺",
+      key: "price",
+      width: 100,
+      render: (e) => <Tooltip title={priceInfoProp}><span className="text-gray-500 font-sans">{e.price} ₺</span></Tooltip>
+    },
+    {
+      title: "Kdv'li Toplam Satış Fiyatı ₺",
+      key: "price",
+      width: 100,
       render: (e) => <span className="text-gray-500 font-sans">{e.price} ₺</span>
     },
     {
-      title: "Alan 1",
-      key: "title",
-      render: (e) => <span className="text-gray-500 font-sans">{e.title}</span>
-    },
-    {
-      title: "Alan 2",
-      key: "name",
-      render: (e) => <span className="text-gray-500 font-sans">{e.name}</span>
-    },
-    {
-      title: "Alan 3",
-      key: "title",
-      render: (e) => <span className="text-gray-500 font-sans">{e.title}</span>
+      title: "Miktar",
+      key: "price",
+      width: 150,
+      render: (e) => <div className="flex justify-center"><Input type="number" defaultValue={e.piece} style={{ width: 50 }} /><div className="flex justify-center rounded bg-primary text-white items-center" style={{ width: 36, height: 36 }}><RefreshCcw size={15} /></div></div>
     },
     {
       title: "İşlemler",
@@ -112,14 +200,23 @@ export default function Product() {
       render: (e) => (
         <div className='flex justify-start'>
           <div className='ml-2'>
-            <Tooltip title="İncele">
-              <Button2 className='border-warning text-warning' icon={<Eye size={20} className='text-warning' />} onClick={onOpen} />
-            </Tooltip>
+            <Dropdown overlay={editMenu} trigger={['click']}>
+              <Tooltip title="Düzenle">
+                <Button2 icon={<Edit2 size={20} className='text-warning' />} />
+              </Tooltip>
+            </Dropdown>
           </div>
           <div className='ml-2'>
-            <Tooltip title="Sepete Ekle">
-              <Button2 icon={<ShoppingCart size={20} className='text-success' />} />
-            </Tooltip>
+            <Popconfirm
+              title="Bu ürünü silmek istediğinizden emin misiniz?"
+              onConfirm={() => deleteData(e.formID)}
+              okText="Evet"
+              cancelText="Hayır"
+            >
+              <Tooltip title="Sil">
+                <Button2 icon={<Trash2 size={20} className='text-danger' />} />
+              </Tooltip>
+            </Popconfirm>
           </div>
         </div>
       )
@@ -271,34 +368,6 @@ export default function Product() {
           </div>
         </div>
       </div>
-
-      <Modal size="xl" isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 text-warning">Deneme Ürün</ModalHeader>
-              <ModalBody>
-                <div className="flex justify-start items-center w-full">
-                  <div className="w-40"><img src="/items/balata.png" alt="" style={{ objectFit: 'cover' }} /></div>
-                  <div className="ml-4">
-                    <div className="mb-2"><span className="text-warning">Ürün Adı: </span><strong className="text-warning">Deneme Ürün</strong></div>
-                    <div className="mb-2"><span className="text-black">Ürün Kodu: </span><strong className="text-black">XF53FG</strong></div>
-                    <div className="mb-2"><span className="text-black">Stok: </span><strong className="text-black">145</strong></div>
-                    <div className="mb-2"><span className="text-black">Fiyat: </span><strong className="text-black">123 ₺</strong></div>
-                    <div className="mb-2"><span className="text-black">Alan 1: </span><strong className="text-black">FG+453</strong></div>
-                    <div className="mb-2"><span className="text-black">Alan 2: </span><strong className="text-black">GHKE56</strong></div>
-                    <div className="mb-2"><span className="text-black">Alan 3: </span><strong className="text-black">23RTGS</strong></div>
-                  </div>
-                </div>
-              </ModalBody>
-              <ModalFooter className="flex justify-end">
-                <Button className="text-warning border border-warning bg-white" onPress={onClose}>Kapat</Button>
-                <Button color="warning" className="text-white" onPress={onClose}>Sepete Ekle</Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
     </GuestLayout>
   );
 }
