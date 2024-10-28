@@ -43,7 +43,7 @@ export default function Login() {
           />
           <div className="flex items-center justify-end mt-2">
             <Link
-              href="/forgot-password"
+              href="/auth/forgot-password"
               className="underline text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-400">
               Şifremi unuttum?
             </Link>

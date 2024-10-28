@@ -4,49 +4,21 @@ import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
-import { Table, Tooltip, Button as Button2, Popconfirm, Menu, Dropdown } from "antd";
+import { Table, Tooltip, Button as Button2, Popconfirm, Menu, Dropdown, Row, Col } from "antd";
 import { list, carsGroup } from "@/app/data/search_data";
-import { Circle, Edit2, Info, RefreshCcw, Search, Star, Trash2, Truck } from "react-feather";
-import { Button, Checkbox, Input, Select, SelectItem, Tab, Tabs } from "@nextui-org/react";
+import { Circle, Edit2, Eye, Info, RefreshCcw, Search, Star, Trash2, Truck } from "react-feather";
+import { Button, Checkbox, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Tab, Tabs, useDisclosure } from "@nextui-org/react";
+import { popupColumns } from "./columns";
+import { imgProp, infoProp, offerProp, priceInfoProp } from "./toolViewer";
+import { DATA, images, POPUPDATA } from "./data";
+import Purchases from "./popupModels/purchases";
+import GeneralInfo from "./popupModels/generalInfo";
+import Alternative from "./popupModels/alternative";
 
 export default function Product() {
   const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
-
-  const images = [
-    {
-      title: "Haberler",
-      src: "/items/c1.png",
-      link: "/pages/news",
-    },
-    {
-      title: "Duyurular",
-      src: "/items/c2.png",
-      link: "/pages/notice",
-    },
-    {
-      title: "Yeni Ürünler",
-      src: "/items/c3.png",
-      link: "/pages/new-product",
-    },
-    {
-      title: "Bugünün Ürünleri",
-      src: "/items/c4.png",
-      link: "/pages/today-product",
-    },
-    {
-      title: "Favori Ürünlerim",
-      src: "/items/c5.png",
-      link: "/pages/favorite-product",
-    },
-  ]
-
-  const DATA = [
-    { "logo": "/items/c1.png", "piece": 1, "kdvSurprize": false, "discount": "", "isNot": true, "offer": false, "cityStatus": true, "city": "Ankara", "productID": 1, "title": "Deneme", "code": "XF53FG", "name": "Deneme Ürün", "stock": 145, "price": 1305 },
-    { "logo": "/items/c2.png", "piece": 2, "kdvSurprize": true, "discount": "10+6", "isNot": false, "offer": true, "cityStatus": false, "city": "İstanbul", "productID": 2, "title": "Deneme2", "code": "XF53FG", "name": "Deneme Ürün2", "stock": 145, "price": 1305 },
-    { "logo": "/items/c3.png", "piece": 3, "kdvSurprize": false, "discount": "", "isNot": true, "offer": false, "cityStatus": true, "city": "İzmir", "productID": 3, "title": "Deneme3", "code": "XF53FG", "name": "Deneme Ürün3", "stock": 145, "price": 1305 },
-    { "logo": "/items/c4.png", "piece": 4, "kdvSurprize": true, "discount": "", "isNot": false, "offer": true, "cityStatus": false, "city": "Ankara", "productID": 4, "title": "Deneme4", "code": "XF53FG", "name": "Deneme Ürün4", "stock": 145, "price": 1305 },
-    { "logo": "/items/c5.png", "piece": 5, "kdvSurprize": false, "discount": "20+2", "isNot": true, "offer": false, "cityStatus": true, "city": "İstanbul", "productID": 5, "title": "Deneme5", "code": "XF53FG", "name": "Deneme Ürün5", "stock": 145, "price": 1305 },
-  ]
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [activeTab, setActiveTab] = React.useState(1);
 
   const onSelectChange = (newSelectedRowKeys) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -56,41 +28,6 @@ export default function Product() {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-
-  const infoProp = () => {
-    return (
-      <div className="p-3">
-        <div className="bg-warning p-2 rounded-xl"><h3>Kapı Cam Fitili</h3></div>
-        <div className="mt-2"><strong>Kodu: </strong><span>XF53FG</span></div>
-        <div className="mt-2"><strong>Satın alınan adet: </strong><span>3</span></div>
-        <div className="mt-2"><strong>KDV'siz adet fiyatı: </strong><span>3040 ₺</span></div>
-        <div className="mt-2 text-warning"><strong>KDV'li adet fiyatı: </strong><span>3040 ₺</span></div>
-      </div>
-    )
-  }
-
-  const priceInfoProp = () => {
-    return (
-      <div className="p-3">
-        <div className="bg-warning p-2 rounded-xl"><h3>Fiyat Bilgileri</h3></div>
-        <div className="mt-2"><strong>Satın alınan adet: </strong><span>3</span></div>
-        <div className="mt-2"><strong>KDV'siz adet fiyatı: </strong><span>3040 ₺</span></div>
-        <div className="mt-2 text-warning"><strong>KDV'li adet fiyatı: </strong><span>3040 ₺</span></div>
-      </div>
-    )
-  }
-
-  const offerProp = () => {
-    return (
-      <div className="p-3">
-        <div className="bg-warning p-2 rounded-xl"><h3>Son Alış Fiyatınız</h3></div>
-        <div className="mt-2"><strong>Tarih: </strong><span>12.12.2020</span></div>
-        <div className="mt-2"><strong>Satın alınan adet: </strong><span>3</span></div>
-        <div className="mt-2"><strong>KDV'siz adet fiyatı: </strong><span>3040 ₺</span></div>
-        <div className="mt-2 text-warning"><strong>KDV'li adet fiyatı: </strong><span>3040 ₺</span></div>
-      </div>
-    )
-  }
 
   const editMenu = (
     <Menu>
@@ -103,10 +40,22 @@ export default function Product() {
 
   const columns = [
     {
+      title: "",
+      key: "productID",
+      width: 70,
+      render: (e) => <Tooltip title={() => imgProp(e.logo)}><img src={e.logo} alt="" style={{ width: 50 }} /></Tooltip>
+    },
+    {
       title: <div className="w-100 flex justify-center"><Info size={15} /></div>,
       key: "productID",
       width: 40,
       render: (e) => <Tooltip title={infoProp}><div><Info size={15} /></div></Tooltip>
+    },
+    {
+      title: <div className="w-100 flex justify-center"><Eye size={15} /></div>,
+      key: "productID",
+      width: 40,
+      render: (e) => <div onClick={onOpen}><Eye size={15} /></div>
     },
     {
       title: <div className="w-100 flex justify-center"><Truck size={20} /></div>,
@@ -368,6 +317,36 @@ export default function Product() {
           </div>
         </div>
       </div>
-    </GuestLayout>
+
+      <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 text-warning">Deneme Ürün</ModalHeader>
+              <ModalBody>
+                <div className="w-full flex justify-start">
+                  <div onClick={() => setActiveTab(1)} className={`border border-succcess ${activeTab === 1 ? "bg-success" : null} ${activeTab === 1 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Önceki Alımlar</div>
+                  <div onClick={() => setActiveTab(2)} className={`border border-succcess ${activeTab === 2 ? "bg-success" : null} ${activeTab === 2 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Alternatifler</div>
+                  <div onClick={() => setActiveTab(3)} className={`border border-succcess ${activeTab === 3 ? "bg-success" : null} ${activeTab === 3 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Genel Bilgiler</div>
+                  <div onClick={() => setActiveTab(4)} className={`border border-succcess ${activeTab === 4 ? "bg-success" : null} ${activeTab === 4 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Oem Kodlar</div>
+                  <div onClick={() => setActiveTab(5)} className={`border border-succcess ${activeTab === 5 ? "bg-success" : null} ${activeTab === 5 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Rakip Kodlar</div>
+                  <div onClick={() => setActiveTab(6)} className={`border border-succcess ${activeTab === 6 ? "bg-success" : null} ${activeTab === 6 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Araç</div>
+                  <div onClick={() => setActiveTab(7)} className={`border border-succcess ${activeTab === 7 ? "bg-success" : null} ${activeTab === 7 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Oem</div>
+                  <div onClick={() => setActiveTab(8)} className={`border border-succcess ${activeTab === 8 ? "bg-success" : null} ${activeTab === 8 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Rakip Kod</div>
+                  <div onClick={() => setActiveTab(9)} className={`border border-succcess ${activeTab === 9 ? "bg-success" : null} ${activeTab === 9 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Markalar</div>
+                </div>
+                {activeTab === 1 ? <Purchases /> : null}
+                {activeTab === 2 ? <Alternative /> : null}
+                {activeTab === 3 ? <GeneralInfo /> : null}
+              </ModalBody>
+              <ModalFooter className="flex justify-end">
+                <Button className="text-warning border border-warning bg-white" onPress={onClose}>Kapat</Button>
+                <Button color="warning" className="text-white" onPress={onClose}>Sepete Ekle</Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </GuestLayout >
   );
 }
