@@ -1,14 +1,14 @@
+import { popupColumns } from '@/components/Elements/columns'
+import { POPUPDATA } from '@/components/Elements/data'
 import { Table } from 'antd'
 import React from 'react'
-import { alternativeColumns } from '../columns'
-import { alternativeDATA } from '../data'
 
-const Alternative = () => {
+const Purchases = () => {
     return (
         <Table
             bordered
-            columns={alternativeColumns}
-            dataSource={alternativeDATA}
+            columns={popupColumns}
+            dataSource={POPUPDATA}
             rowKey='id'
             scroll={{ x: 'max-content' }}
             className="product shadow-sm rounded"
@@ -17,4 +17,4 @@ const Alternative = () => {
     )
 }
 
-export default Alternative
+export default Purchases

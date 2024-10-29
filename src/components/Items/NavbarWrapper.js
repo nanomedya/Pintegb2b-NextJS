@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, User, Tooltip } from "@nextui-org/react";
 import AcmeLogo from "./AcmeLogo.jsx";
-import { Bell, Box, CreditCard, FileText, Home, List, ShoppingCart } from "react-feather";
+import { Bell, Box, CreditCard, FileText, Home, List, MapPin, ShoppingCart } from "react-feather";
 import { MenuItem } from "../Elements/MenuItem.js";
 
 export default function NavbarWrapper() {
@@ -22,6 +22,7 @@ export default function NavbarWrapper() {
     { label: "Siparişler", link: "" },
     { label: "Cari Hesap", link: "" },
     { label: "Ödeme Yap", link: "pay" },
+    { label: "İletişim", link: "contact" },
   ];
 
   return (
@@ -37,13 +38,13 @@ export default function NavbarWrapper() {
 
       <NavbarContent className="lg:hidden pr-3" justify="center">
         <NavbarBrand>
-          <AcmeLogo className="h-10" />
+          <Link href="/pages/home"><AcmeLogo className="h-10" /></Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden lg:flex gap-16" justify="center">
         <NavbarBrand>
-          <AcmeLogo className="h-14" />
+          <Link href="/pages/home"><AcmeLogo className="h-14" /></Link>
         </NavbarBrand>
 
 
@@ -57,7 +58,6 @@ export default function NavbarWrapper() {
             isActive={path === "/" ? true : false}
           />
         </NavbarItem>
-
         <NavbarItem>
           <MenuItem
             link="/pages/product"
@@ -68,12 +68,10 @@ export default function NavbarWrapper() {
             isActive={path === "/pages/product" ? true : false}
           />
         </NavbarItem>
-
         <NavbarItem>
           <Dropdown placement="bottom-end" key="order">
             <DropdownTrigger>
               <div className="flex items-center gap-2 cursor-pointer">
-
                 <MenuItem
                   link="/"
                   istooltip={false}
@@ -82,22 +80,19 @@ export default function NavbarWrapper() {
                   tooltipText="Siparişler"
                   isActive={false}
                 />
-
               </div>
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
-              <DropdownItem textValue="settings" key="orders"><Link className="text-small text-grey w-full font-normal" href="/pages/orders/my-orders">Siparişlerim</Link></DropdownItem>
-              <DropdownItem textValue="settings" key="order_balance"><Link className="text-small text-grey w-full font-normal" href="/pages/orders/my-back-orders">Bakiye Siparişlerim</Link></DropdownItem>
-              <DropdownItem textValue="settings" key="where_cargo"><Link className="text-small text-grey w-full font-normal" href="/pages/orders/where-is-cargo">Kargo Nerede?</Link></DropdownItem>
+              <DropdownItem textValue="settings" key="orders"><Link className="text-small text-black w-full font-normal" href="/pages/orders/my-orders">Siparişlerim</Link></DropdownItem>
+              <DropdownItem textValue="settings" key="order_balance"><Link className="text-small text-black w-full font-normal" href="/pages/orders/my-back-orders">Bakiye Siparişlerim</Link></DropdownItem>
+              <DropdownItem textValue="settings" key="where_cargo"><Link className="text-small text-black w-full font-normal" href="/pages/orders/where-is-cargo">Kargo Nerede?</Link></DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>
         <NavbarItem>
           <Dropdown placement="bottom-end" key="cari">
             <DropdownTrigger>
-
               <div className="flex items-center gap-2 cursor-pointer">
-
                 <MenuItem
                   link="/"
                   istooltip={false}
@@ -106,19 +101,16 @@ export default function NavbarWrapper() {
                   tooltipText="Cari Hesap"
                   isActive={false}
                 />
-
               </div>
-
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
-              <DropdownItem textValue="settings" key="tax"><Link className="text-small text-grey w-full font-normal" href="/pages/current-account/invoices">Faturalar</Link></DropdownItem>
-              <DropdownItem textValue="settings" key="open_tax"><Link className="text-small text-grey w-full font-normal" href="/pages/current-account/unclosed-invoices">Kapanmamış Faturalar</Link></DropdownItem>
-              <DropdownItem textValue="settings" key="debt_statu"><Link className="text-small text-grey w-full font-normal" href="/pages/current-account/debt-status">Borç Durumu</Link></DropdownItem>
+              <DropdownItem textValue="settings" key="tax"><Link className="text-small text-black w-full font-normal" href="/pages/current-account/invoices">Faturalar</Link></DropdownItem>
+              <DropdownItem textValue="settings" key="open_tax"><Link className="text-small text-black w-full font-normal" href="/pages/current-account/unclosed-invoices">Kapanmamış Faturalar</Link></DropdownItem>
+              <DropdownItem textValue="settings" key="debt_statu"><Link className="text-small text-black w-full font-normal" href="/pages/current-account/debt-status">Borç Durumu</Link></DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </NavbarItem>
         <NavbarItem>
-
           <MenuItem
             link="/pages/pay"
             istooltip={false}
@@ -127,7 +119,16 @@ export default function NavbarWrapper() {
             tooltipText="Ödeme Yap"
             isActive={path === "/pages/pay" ? true : false}
           />
-
+        </NavbarItem>
+        <NavbarItem>
+          <MenuItem
+            link="/pages/contact"
+            istooltip={false}
+            isArrow={false}
+            icon={MapPin}
+            tooltipText="İletişim"
+            isActive={path === "/pages/contact" ? true : false}
+          />
         </NavbarItem>
       </NavbarContent>
 
@@ -179,12 +180,12 @@ export default function NavbarWrapper() {
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem textValue="profile" key="profile">
-              <Link className="w-full text-grey font-normal" href="/pages/my-profile">Profilim</Link>
+              <Link className="w-full text-black font-normal" href="/pages/my-profile">Profilim</Link>
             </DropdownItem>
-            <DropdownItem textValue="settings" key="settings"><Link className="w-full text-grey font-normal" href="/pages/settings">Ayarlar</Link></DropdownItem>
-            <DropdownItem textValue="help_and_feedback" key="help_and_feedback"><Link className="w-full text-grey font-normal" href="/pages/help-feedback">Yardım & Geri bildirim</Link></DropdownItem>
+            <DropdownItem textValue="settings" key="settings"><Link className="w-full text-black font-normal" href="/pages/settings">Ayarlar</Link></DropdownItem>
+            <DropdownItem textValue="help_and_feedback" key="help_and_feedback"><Link className="w-full text-black font-normal" href="/pages/help-feedback">Yardım & Geri bildirim</Link></DropdownItem>
             <DropdownItem textValue="logout" key="logout" color="danger">
-              <Link className="w-full text-grey font-normal" href="/">Güvenli Çıkış</Link>
+              <Link className="w-full text-black font-normal" href="/">Güvenli Çıkış</Link>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

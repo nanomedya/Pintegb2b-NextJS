@@ -1,19 +1,21 @@
 "use client"
 import React from "react";
-import { Input, Tabs, Tab, Card, CardBody, Select, SelectItem, Checkbox, Button, Link } from "@nextui-org/react";
+import { Input, Tabs, Tab, Select, SelectItem, Checkbox, Button, Link } from "@nextui-org/react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Slider from "@/components/Items/Slider";
-import { Search } from "react-feather";
-import ProductTable from "@/components/Items/Table";
+import { Copy, Search } from "react-feather";
 import Cardd from "@/components/Items/Card";
-import { list, carsGroup } from "@/app/data/search_data";
+import { list, carsGroup, storeGroup } from "@/app/data/search_data";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
-import BankAccounts from "@/components/Items/BankAccounts";
+import { Tooltip } from "antd";
+import { handleCopy } from "@/components/Elements/copy";
 
 export default function Home() {
+  const [visible, setVisible] = React.useState(false);
+
   const images = [
     {
       title: "Haberler",
@@ -138,6 +140,17 @@ export default function Home() {
                     >
                       {carsGroup.map((item) => (
                         <SelectItem key={'x' + item.key}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                    <Select
+                      size="lg"
+                      label="Depo Seç"
+                      className="max-w-xs"
+                    >
+                      {storeGroup.map((item) => (
+                        <SelectItem key={item.key}>
                           {item.label}
                         </SelectItem>
                       ))}
@@ -295,8 +308,6 @@ export default function Home() {
 
           <div className="flex flex-wrap w-full mt-3 relative">
             <div className="w-full relative bg-white rounded-xl shadow p-3 overflow-x-auto whitespace-nowrap">
-
-
               <Table aria-label="bank accounts list table" shadow="none" className="w-full">
                 <TableHeader>
                   <TableColumn>Banka</TableColumn>
@@ -304,32 +315,31 @@ export default function Home() {
                   <TableColumn>Şube Kodu</TableColumn>
                   <TableColumn>Hesap No</TableColumn>
                   <TableColumn>IBAN Numarası</TableColumn>
+                  <TableColumn>Kopyala</TableColumn>
                 </TableHeader>
                 <TableBody>
 
                   {banks.map((item, key) => (
 
                     <TableRow key={key}>
-                      <TableCell>	{ item.title } </TableCell>
+                      <TableCell>	{item.title} </TableCell>
                       <TableCell>	BEYKENT TİCARİ </TableCell>
                       <TableCell>	1604 </TableCell>
                       <TableCell>	6299877 </TableCell>
-                      <TableCell>		TR30 0006 2001 6040 0006 2998 77 </TableCell>
+                      <TableCell>TR30 0006 2001 6040 0006 2998 77</TableCell>
+                      <TableCell>
+                        <Tooltip title={visible[key] ? "Kopyalandı!" : ""} visible={visible[key]}>
+                          <Copy className="cursor-pointer" onClick={() => handleCopy("TR30 0006 2001 6040 0006 2998 77", key, visible, setVisible)} />
+                        </Tooltip>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-
-
             </div>
           </div>
-
         </div>
-
-
-
       </div>
     </GuestLayout>
-
   );
 }

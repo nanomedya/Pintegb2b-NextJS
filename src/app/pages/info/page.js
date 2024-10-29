@@ -1,19 +1,20 @@
 "use client"
 import React from "react";
-import { Input, Tabs, Tab, Card, CardBody, Select, SelectItem, Checkbox, Button, Link } from "@nextui-org/react";
+import { Input, Tabs, Tab, Select, SelectItem, Checkbox, Button, Link } from "@nextui-org/react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Slider from "@/components/Items/Slider";
-import { Search } from "react-feather";
-import ProductTable from "@/components/Items/Table";
+import { Copy, Search } from "react-feather";
 import Cardd from "@/components/Items/Card";
 import { list, carsGroup } from "@/app/data/search_data";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
-import BankAccounts from "@/components/Items/BankAccounts";
+import { Tooltip } from "antd";
+import { handleCopy } from "@/components/Elements/copy";
 
 export default function News() {
+  const [visible, setVisible] = React.useState(false);
   const images = [
     {
       title: "Haberler",
@@ -308,8 +309,6 @@ export default function News() {
 
           <div className="flex flex-wrap w-full mt-3 relative">
             <div className="w-full relative bg-white rounded-xl shadow p-3 overflow-x-auto whitespace-nowrap">
-
-
               <Table aria-label="bank accounts list table" shadow="none" className="w-full">
                 <TableHeader>
                   <TableColumn>Banka</TableColumn>
@@ -317,6 +316,7 @@ export default function News() {
                   <TableColumn>Şube Kodu</TableColumn>
                   <TableColumn>Hesap No</TableColumn>
                   <TableColumn>IBAN Numarası</TableColumn>
+                  <TableColumn>Kopyala</TableColumn>
                 </TableHeader>
                 <TableBody>
 
@@ -327,13 +327,16 @@ export default function News() {
                       <TableCell>	BEYKENT TİCARİ </TableCell>
                       <TableCell>	1604 </TableCell>
                       <TableCell>	6299877 </TableCell>
-                      <TableCell>		TR30 0006 2001 6040 0006 2998 77 </TableCell>
+                      <TableCell>TR30 0006 2001 6040 0006 2998 77</TableCell>
+                      <TableCell>
+                        <Tooltip title={visible[key] ? "Kopyalandı!" : ""} visible={visible[key]}>
+                          <Copy className="cursor-pointer" onClick={() => handleCopy("TR30 0006 2001 6040 0006 2998 77", key, visible, setVisible)} />
+                        </Tooltip>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-
-
             </div>
           </div>
 

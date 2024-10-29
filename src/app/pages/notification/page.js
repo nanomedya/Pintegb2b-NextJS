@@ -5,8 +5,12 @@ import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
+import { Tooltip } from "antd";
+import { Copy } from "react-feather";
+import { handleCopy } from "@/components/Elements/copy";
 
 export default function Notification() {
+  const [visible, setVisible] = React.useState(false);
   const images = [
     {
       title: "Haberler",
@@ -185,15 +189,23 @@ export default function Notification() {
                   <TableColumn>Şube Kodu</TableColumn>
                   <TableColumn>Hesap No</TableColumn>
                   <TableColumn>IBAN Numarası</TableColumn>
+                  <TableColumn>Kopyala</TableColumn>
                 </TableHeader>
                 <TableBody>
+
                   {banks.map((item, key) => (
+
                     <TableRow key={key}>
                       <TableCell>	{item.title} </TableCell>
                       <TableCell>	BEYKENT TİCARİ </TableCell>
                       <TableCell>	1604 </TableCell>
                       <TableCell>	6299877 </TableCell>
-                      <TableCell>		TR30 0006 2001 6040 0006 2998 77 </TableCell>
+                      <TableCell>TR30 0006 2001 6040 0006 2998 77</TableCell>
+                      <TableCell>
+                        <Tooltip title={visible[key] ? "Kopyalandı!" : ""} visible={visible[key]}>
+                          <Copy className="cursor-pointer" onClick={() => handleCopy("TR30 0006 2001 6040 0006 2998 77", key, visible, setVisible)} />
+                        </Tooltip>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

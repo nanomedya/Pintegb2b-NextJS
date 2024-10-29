@@ -1,5 +1,7 @@
 import { Tooltip } from "antd"
-import { imgProp } from "./toolViewer"
+import { Image, ShoppingCart } from "react-feather"
+import { Input } from "@nextui-org/react"
+import { imgProp } from "../Items/toolViewer"
 
 export const popupColumns = [
     {
@@ -102,9 +104,9 @@ export const popupColumns = [
 
 export const alternativeColumns = [
     {
-        title: "",
+        title: <div className="flex justify-center"><Image size={15} /></div>,
         key: "id",
-        width: 100,
+        width: 70,
         render: (e) => <Tooltip title={() => imgProp(e.logo)}><img src={e.logo} alt="" style={{ width: 50 }} /></Tooltip>
     },
     {
@@ -148,5 +150,47 @@ export const alternativeColumns = [
         key: "discount",
         width: 100,
         dataIndex: "discount",
+    },
+    {
+        title: "Birim",
+        key: "unit",
+        dataIndex: "unit",
+    },
+    {
+        title: "Parça Aile Adı",
+        key: "familyName",
+        width: 100,
+        dataIndex: "familyName",
+    },
+    {
+        title: "Parça Tip Adı",
+        key: "typeName",
+        width: 100,
+        dataIndex: "typeName",
+    },
+    {
+        title: "Depo Durumu",
+        key: "storeStatus",
+        width: 50,
+        render: (e) => e.storeStatus ? <div className="bg-success text-center text-white px-1 rounded">Var</div> : <div className="bg-danger text-white px-1 rounded">Var</div>
+    },
+    {
+        title: <div className="flex justify-center"><ShoppingCart size={15} /></div>,
+        key: "storeStatus",
+        width: 100,
+        render: (e) => <div className="flex justify-center items-center"><Input type="number" defaultValue={3} style={{ width: 100, height: 20 }} /><ShoppingCart className="bg-success text-white p-1 ml-1 rounded" /></div>
+    },
+]
+
+export const oemColumns = [
+    {
+        title: "",
+        width: 50,
+        key: "field1",
+    },
+    {
+        title: "Alan-1",
+        key: "field1",
+        dataIndex: "field1",
     },
 ]

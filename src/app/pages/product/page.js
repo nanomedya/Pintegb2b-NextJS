@@ -1,24 +1,32 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
-import { Table, Tooltip, Button as Button2, Popconfirm, Menu, Dropdown, Row, Col } from "antd";
-import { list, carsGroup } from "@/app/data/search_data";
-import { Circle, Edit2, Eye, Info, RefreshCcw, Search, Star, Trash2, Truck } from "react-feather";
+import { Table, Tooltip, Button as Button2, Menu, Dropdown } from "antd";
+import { list, carsGroup, storeGroup } from "@/app/data/search_data";
+import { AlignJustify, Circle, Edit2, Eye, Image, Info, RefreshCcw, Search, ShoppingCart, Star, Trash2, Truck, X } from "react-feather";
 import { Button, Checkbox, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Tab, Tabs, useDisclosure } from "@nextui-org/react";
-import { popupColumns } from "./columns";
-import { imgProp, infoProp, offerProp, priceInfoProp } from "./toolViewer";
-import { DATA, images, POPUPDATA } from "./data";
-import Purchases from "./popupModels/purchases";
-import GeneralInfo from "./popupModels/generalInfo";
-import Alternative from "./popupModels/alternative";
+import { discountIncludeInfo, imgProp, infoProp, offerProp } from "../../../components/Items/toolViewer";
+import Purchases from "@/components/Items/popupModels/purchases";
+import Alternative from "@/components/Items/popupModels/alternative";
+import GeneralInfo from "@/components/Items/popupModels/generalInfo";
+import { offerVariant } from "@/components/Elements/offerVariant";
+import OfferItem from "@/components/Items/offerItem";
+import Oem from "@/components/Items/popupModels/oem";
+import { motion } from "framer-motion";
+import { DATA, images } from "@/components/Elements/data";
 
 export default function Product() {
   const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const [modalId, setModalId] = useState(1)
+  const [seconds, setSeconds] = useState(223235);
+  const [offerModal, setOfferModal] = useState(false)
   const [activeTab, setActiveTab] = React.useState(1);
+
+  const toggleOfferModal = () => setOfferModal(!offerModal)
 
   const onSelectChange = (newSelectedRowKeys) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -40,25 +48,25 @@ export default function Product() {
 
   const columns = [
     {
-      title: "",
+      title: <div className="w-100 flex justify-center"><Image size={15} /></div>,
       key: "productID",
       width: 70,
-      render: (e) => <Tooltip title={() => imgProp(e.logo)}><img src={e.logo} alt="" style={{ width: 50 }} /></Tooltip>
+      render: (e) => <Tooltip className="cursor-pointer" title={() => imgProp(e.logo)}><img src={e.logo} alt="" style={{ width: 50 }} /></Tooltip>
     },
     {
       title: <div className="w-100 flex justify-center"><Info size={15} /></div>,
       key: "productID",
       width: 40,
-      render: (e) => <Tooltip title={infoProp}><div><Info size={15} /></div></Tooltip>
+      render: (e) => <Tooltip className="cursor-pointer" title={infoProp}><div><Info size={15} /></div></Tooltip>
     },
     {
       title: <div className="w-100 flex justify-center"><Eye size={15} /></div>,
       key: "productID",
       width: 40,
-      render: (e) => <div onClick={onOpen}><Eye size={15} /></div>
+      render: (e) => <div className="cursor-pointer" onClick={() => { setModalId(1); onOpen() }}><Eye size={15} /></div>
     },
     {
-      title: <div className="w-100 flex justify-center"><Truck size={20} /></div>,
+      title: <div className="w-100 flex justify-center"><Truck size={15} /></div>,
       key: "productID",
       width: 30,
       render: (e) => <div className={e.cityStatus ? "bg-success rounded px-2 py-1 text-white text-center" : "bg-danger rounded px-2 py-1 text-white text-center"}>{e.city}</div>
@@ -71,7 +79,13 @@ export default function Product() {
     {
       title: "Adı",
       key: "name",
-      render: (e) => <div><div><span className="text-gray-500 font-sans">{e.name}</span></div>{e.offer ? <div className="bg-success text-white rounded px-1 text-center mt-1">Kampanya</div> : null}</div>
+      render: (e) => <div>
+        <div><span className="text-gray-500 font-sans">{e.name}</span></div>
+        <div className="flex justify-start items-center">
+          {e.offer ? <div onClick={toggleOfferModal} className="bg-success cursor-pointer text-white rounded px-1 text-center mt-1">Kampanya</div> : null}
+          <div onClick={() => { setModalId(2); onOpen() }} className="cursor-pointer bg-primary text-white rounded font-bold px-1 mt-1 ml-1">A</div>
+        </div>
+      </div>
     },
     {
       title: "Üretici",
@@ -123,13 +137,13 @@ export default function Product() {
       title: "Kdv Hariç Fiyatı ₺",
       key: "price",
       width: 100,
-      render: (e) => <div className="w-full">{e.kdvSurprize ? <div className="w-full flex justify-end"><Tooltip title={offerProp}><Star color="red" size={15} /></Tooltip></div> : false}<div className="w-full flex justify-end mr-2">{e.price} ₺</div></div>
+      render: (e) => <div className="w-full cursor-pointer">{e.kdvSurprize ? <div className="w-full flex justify-end"><Tooltip title={offerProp}><Star color="red" size={15} /></Tooltip></div> : false}<div className="w-full flex justify-end mr-2">{e.price} ₺</div></div>
     },
     {
       title: "Kdv Dahil Fiyatı ₺",
       key: "price",
       width: 100,
-      render: (e) => <Tooltip title={priceInfoProp}><span className="text-gray-500 font-sans">{e.price} ₺</span></Tooltip>
+      render: (e) => <Tooltip className="cursor-pointer" title={discountIncludeInfo}><span className="text-gray-500 font-sans">{e.price} ₺</span></Tooltip>
     },
     {
       title: "Kdv'li Toplam Satış Fiyatı ₺",
@@ -141,7 +155,7 @@ export default function Product() {
       title: "Miktar",
       key: "price",
       width: 150,
-      render: (e) => <div className="flex justify-center"><Input type="number" defaultValue={e.piece} style={{ width: 50 }} /><div className="flex justify-center rounded bg-primary text-white items-center" style={{ width: 36, height: 36 }}><RefreshCcw size={15} /></div></div>
+      render: (e) => <div className="flex justify-center"><Input type="number" defaultValue={e.piece} style={{ width: 50 }} /><div className="flex justify-center rounded bg-primary text-white items-center" style={{ width: 36, height: 36 }}><RefreshCcw className="cursor-pointer" size={15} /></div></div>
     },
     {
       title: "İşlemler",
@@ -150,27 +164,39 @@ export default function Product() {
         <div className='flex justify-start'>
           <div className='ml-2'>
             <Dropdown overlay={editMenu} trigger={['click']}>
-              <Tooltip title="Düzenle">
-                <Button2 icon={<Edit2 size={20} className='text-warning' />} />
+              <Tooltip title="Seçenekler">
+                <Button2 icon={<AlignJustify size={20} className='text-warning' />} />
               </Tooltip>
             </Dropdown>
           </div>
           <div className='ml-2'>
-            <Popconfirm
-              title="Bu ürünü silmek istediğinizden emin misiniz?"
-              onConfirm={() => deleteData(e.formID)}
-              okText="Evet"
-              cancelText="Hayır"
-            >
-              <Tooltip title="Sil">
-                <Button2 icon={<Trash2 size={20} className='text-danger' />} />
-              </Tooltip>
-            </Popconfirm>
+            <Tooltip title="Sepete Ekle">
+              <Button2 icon={<ShoppingCart size={20} className='text-success' />} />
+            </Tooltip>
           </div>
         </div>
       )
     }
   ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds((prevSeconds) => {
+        if (prevSeconds <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prevSeconds - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const days = Math.floor(seconds / (24 * 60 * 60)).toString().length === 1 ? `0${Math.floor(seconds / (24 * 60 * 60))}` : Math.floor(seconds / (24 * 60 * 60));
+  const hours = Math.floor((seconds % (24 * 60 * 60)) / 3600).toString().length === 1 ? `0${Math.floor((seconds % (24 * 60 * 60)) / 3600)}` : Math.floor((seconds % (24 * 60 * 60)) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60).toString().length === 1 ? `0${Math.floor((seconds % 3600) / 60)}` : Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = (seconds % 60).toString().length === 1 ? `0${seconds % 60}` : seconds % 60;
 
   return (
     <GuestLayout>
@@ -213,7 +239,7 @@ export default function Product() {
                       className="max-w-xs"
                     >
                       {list.map((item) => (
-                        <SelectItem key={item.key}>
+                        <SelectItem className="text-black" key={item.key}>
                           {item.label}
                         </SelectItem>
                       ))}
@@ -224,7 +250,18 @@ export default function Product() {
                       className="max-w-xs"
                     >
                       {carsGroup.map((item) => (
-                        <SelectItem key={'x' + item.key}>
+                        <SelectItem className="text-black" key={'x' + item.key}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                    <Select
+                      size="lg"
+                      label="Depo Seç"
+                      className="max-w-xs"
+                    >
+                      {storeGroup.map((item) => (
+                        <SelectItem className="text-black" key={item.key}>
                           {item.label}
                         </SelectItem>
                       ))}
@@ -286,7 +323,7 @@ export default function Product() {
             columns={columns}
             dataSource={DATA}
             rowKey='productID'
-            rowSelection={rowSelection}
+            // rowSelection={rowSelection}
             scroll={{ x: 'max-content' }}
             className="product shadow-sm rounded"
             locale={{ emptyText: 'Gösterilecek veri yok 😔' }}
@@ -318,33 +355,59 @@ export default function Product() {
         </div>
       </div>
 
+      {offerModal && (<div className="offer-modal">
+        <X className="offer-close" onClick={toggleOfferModal} />
+        <motion.div {...offerVariant} className="offer-content">
+          <div className="p-3 border-b border-gray-200"><h2><strong>Fırsat Ürünleri</strong></h2></div>
+          <div className="p-3 overflow-y-auto h-screen pb-3 mb-3">
+
+            <OfferItem days={days} hours={hours} minutes={minutes} remainingSeconds={remainingSeconds} />
+            <OfferItem days={days} hours={hours} minutes={minutes} remainingSeconds={remainingSeconds} />
+            <OfferItem days={days} hours={hours} minutes={minutes} remainingSeconds={remainingSeconds} />
+
+          </div>
+        </motion.div>
+      </div>)}
+
       <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 text-warning">Deneme Ürün</ModalHeader>
-              <ModalBody>
-                <div className="w-full flex justify-start">
-                  <div onClick={() => setActiveTab(1)} className={`border border-succcess ${activeTab === 1 ? "bg-success" : null} ${activeTab === 1 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Önceki Alımlar</div>
-                  <div onClick={() => setActiveTab(2)} className={`border border-succcess ${activeTab === 2 ? "bg-success" : null} ${activeTab === 2 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Alternatifler</div>
-                  <div onClick={() => setActiveTab(3)} className={`border border-succcess ${activeTab === 3 ? "bg-success" : null} ${activeTab === 3 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Genel Bilgiler</div>
-                  <div onClick={() => setActiveTab(4)} className={`border border-succcess ${activeTab === 4 ? "bg-success" : null} ${activeTab === 4 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Oem Kodlar</div>
-                  <div onClick={() => setActiveTab(5)} className={`border border-succcess ${activeTab === 5 ? "bg-success" : null} ${activeTab === 5 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Rakip Kodlar</div>
-                  <div onClick={() => setActiveTab(6)} className={`border border-succcess ${activeTab === 6 ? "bg-success" : null} ${activeTab === 6 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Araç</div>
-                  <div onClick={() => setActiveTab(7)} className={`border border-succcess ${activeTab === 7 ? "bg-success" : null} ${activeTab === 7 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Oem</div>
-                  <div onClick={() => setActiveTab(8)} className={`border border-succcess ${activeTab === 8 ? "bg-success" : null} ${activeTab === 8 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Rakip Kod</div>
-                  <div onClick={() => setActiveTab(9)} className={`border border-succcess ${activeTab === 9 ? "bg-success" : null} ${activeTab === 9 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Markalar</div>
-                </div>
-                {activeTab === 1 ? <Purchases /> : null}
-                {activeTab === 2 ? <Alternative /> : null}
-                {activeTab === 3 ? <GeneralInfo /> : null}
-              </ModalBody>
-              <ModalFooter className="flex justify-end">
-                <Button className="text-warning border border-warning bg-white" onPress={onClose}>Kapat</Button>
-                <Button color="warning" className="text-white" onPress={onClose}>Sepete Ekle</Button>
-              </ModalFooter>
-            </>
-          )}
+          {modalId === 1 ? <>
+            <ModalHeader className="flex flex-col gap-1 text-warning">Deneme Ürün</ModalHeader>
+            <ModalBody>
+              <div className="w-full flex justify-start">
+                <div onClick={() => setActiveTab(1)} className={`border border-succcess ${activeTab === 1 ? "bg-success" : null} ${activeTab === 1 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Önceki Alımlar</div>
+                <div onClick={() => setActiveTab(2)} className={`border border-succcess ${activeTab === 2 ? "bg-success" : null} ${activeTab === 2 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Alternatifler</div>
+                <div onClick={() => setActiveTab(3)} className={`border border-succcess ${activeTab === 3 ? "bg-success" : null} ${activeTab === 3 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Genel Bilgiler</div>
+                <div onClick={() => setActiveTab(4)} className={`border border-succcess ${activeTab === 4 ? "bg-success" : null} ${activeTab === 4 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Oem Kodlar</div>
+                <div onClick={() => setActiveTab(5)} className={`border border-succcess ${activeTab === 5 ? "bg-success" : null} ${activeTab === 5 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Rakip Kodlar</div>
+                <div onClick={() => setActiveTab(6)} className={`border border-succcess ${activeTab === 6 ? "bg-success" : null} ${activeTab === 6 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Araç</div>
+                <div onClick={() => setActiveTab(7)} className={`border border-succcess ${activeTab === 7 ? "bg-success" : null} ${activeTab === 7 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Oem</div>
+                <div onClick={() => setActiveTab(8)} className={`border border-succcess ${activeTab === 8 ? "bg-success" : null} ${activeTab === 8 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Rakip Kod</div>
+                <div onClick={() => setActiveTab(9)} className={`border border-succcess ${activeTab === 9 ? "bg-success" : null} ${activeTab === 9 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Markalar</div>
+              </div>
+              {activeTab === 1 ? <Purchases /> : null}
+              {activeTab === 2 ? <Alternative /> : null}
+              {activeTab === 3 ? <GeneralInfo /> : null}
+              {activeTab === 4 ? null : null}
+              {activeTab === 5 ? null : null}
+              {activeTab === 6 ? null : null}
+              {activeTab === 7 ? <Oem /> : null}
+              {activeTab === 8 ? null : null}
+              {activeTab === 9 ? null : null}
+            </ModalBody>
+            <ModalFooter className="flex justify-end">
+              <Button className="text-warning border border-warning bg-white" onPress={onClose}>Kapat</Button>
+              <Button color="warning" className="text-white" onPress={onClose}>Sepete Ekle</Button>
+            </ModalFooter>
+          </> : null}
+          {
+            modalId === 2 ?
+              <>
+                <ModalHeader className="flex flex-col gap-1 text-warning">Alternatif Ürünler</ModalHeader>
+                <Alternative />
+              </>
+              : null
+          }
         </ModalContent>
       </Modal>
     </GuestLayout >

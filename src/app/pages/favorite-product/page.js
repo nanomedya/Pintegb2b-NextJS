@@ -5,7 +5,7 @@ import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
 import { Popconfirm, Table, Tooltip, Button as Button2 } from "antd";
-import { list, carsGroup } from "@/app/data/search_data";
+import { list, carsGroup, storeGroup } from "@/app/data/search_data";
 import { Edit2, Eye, Search, ShoppingCart, Trash2 } from "react-feather";
 import { Button, Checkbox, Input, Modal, ModalHeader, ModalBody, ModalFooter, Select, SelectItem, Tab, Tabs, useDisclosure, ModalContent } from "@nextui-org/react";
 
@@ -167,7 +167,7 @@ export default function FavoriteProduct() {
                       className="max-w-xs"
                     >
                       {list.map((item) => (
-                        <SelectItem key={item.key}>
+                        <SelectItem className="text-black" key={item.key}>
                           {item.label}
                         </SelectItem>
                       ))}
@@ -178,7 +178,18 @@ export default function FavoriteProduct() {
                       className="max-w-xs"
                     >
                       {carsGroup.map((item) => (
-                        <SelectItem key={'x' + item.key}>
+                        <SelectItem className="text-black" key={'x' + item.key}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                    <Select
+                      size="lg"
+                      label="Depo Seç"
+                      className="max-w-xs"
+                    >
+                      {storeGroup.map((item) => (
+                        <SelectItem className="text-black" key={item.key}>
                           {item.label}
                         </SelectItem>
                       ))}

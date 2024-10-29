@@ -40,3 +40,15 @@ export const priceInfoProp = () => {
         </div>
     )
 }
+
+export const discountIncludeInfo = () => {
+    return (
+        <div className="p-3">
+            <div className="bg-warning p-2 rounded-xl"><h3>Fiyat Bilgileri</h3></div>
+            <div className="mt-2"><strong>Perakende Fiyatı KDVli: </strong><span>1.434,54 ₺</span></div>
+            <div className="mt-2"><strong>Havale Fiyatı KDV Dahil: </strong><span>1.234,42 ₺</span></div>
+            <div className="mt-2"><strong>K.K Tek Çekim KDV Dahil: </strong><span>1.156,47 ₺</span></div>
+            <div className="mt-2"><strong>K.K Taksitli KDV Dahil: </strong><span>1.256,22 ₺</span></div>
+        </div>
+    )
+}
