@@ -4,36 +4,9 @@ import { Input, Button } from "@nextui-org/react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
+import { images } from "@/components/Elements/data";
 
 export default function MyProfile() {
-  const images = [
-    {
-      title: "Haberler",
-      src: "/items/c1.png",
-      link: "/pages/news",
-    },
-    {
-      title: "Duyurular",
-      src: "/items/c2.png",
-      link: "/pages/notice",
-    },
-    {
-      title: "Yeni Ürünler",
-      src: "/items/c3.png",
-      link: "/pages/new-product",
-    },
-    {
-      title: "Bugünün Ürünleri",
-      src: "/items/c4.png",
-      link: "/pages/today-product",
-    },
-    {
-      title: "Favori Ürünlerim",
-      src: "/items/c5.png",
-      link: "/pages/favorite-product",
-    },
-  ]
-
   return (
     <GuestLayout>
       <NavbarWrapper />

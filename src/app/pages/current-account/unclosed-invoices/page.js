@@ -4,50 +4,15 @@ import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
 import DailyRate from "@/components/Items/DailyRate";
-import { Popconfirm, Table, Tooltip, Button as Button2 } from "antd";
-import { list, carsGroup } from "@/app/data/search_data";
-import { Edit2, Eye, Search, ShoppingCart, Trash2 } from "react-feather";
-import { Button, Checkbox, Input, Modal, ModalHeader, ModalBody, ModalFooter, Select, SelectItem, Tab, Tabs, useDisclosure, ModalContent } from "@nextui-org/react";
+import { Table, Tooltip, Button as Button2 } from "antd";
+import { Eye, ShoppingCart } from "react-feather";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, useDisclosure, ModalContent } from "@nextui-org/react";
+import { DATA, images } from "@/components/Elements/data";
+import CurrentRate from "@/components/Items/CurrentRate";
 
 export default function UnclosedInvoices() {
   const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  const images = [
-    {
-      title: "Haberler",
-      src: "/items/c1.png",
-      link: "/pages/news",
-    },
-    {
-      title: "Duyurular",
-      src: "/items/c2.png",
-      link: "/pages/notice",
-    },
-    {
-      title: "Yeni Ürünler",
-      src: "/items/c3.png",
-      link: "/pages/new-product",
-    },
-    {
-      title: "Bugünün Ürünleri",
-      src: "/items/c4.png",
-      link: "/pages/today-product",
-    },
-    {
-      title: "Favori Ürünlerim",
-      src: "/items/c5.png",
-      link: "/pages/favorite-product",
-    },
-  ]
-
-  const DATA = [
-    { "logo": "/items/c1.png", "productID": 1, "title": "Deneme", "code": "XF53FG", "name": "Deneme Ürün", "stock": 145, "price": 1305 },
-    { "logo": "/items/c2.png", "productID": 2, "title": "Deneme2", "code": "XF53FG", "name": "Deneme Ürün2", "stock": 145, "price": 1305 },
-    { "logo": "/items/c3.png", "productID": 3, "title": "Deneme3", "code": "XF53FG", "name": "Deneme Ürün3", "stock": 145, "price": 1305 },
-    { "logo": "/items/c4.png", "productID": 4, "title": "Deneme4", "code": "XF53FG", "name": "Deneme Ürün4", "stock": 145, "price": 1305 },
-    { "logo": "/items/c5.png", "productID": 5, "title": "Deneme5", "code": "XF53FG", "name": "Deneme Ürün5", "stock": 145, "price": 1305 },
-  ]
 
   const onSelectChange = (newSelectedRowKeys) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -137,7 +102,7 @@ export default function UnclosedInvoices() {
         <div className="mt-12 flex flex-wrap justify-between items-center w-full">
           <span className="text-2xl text-gray-900 font-bold inline-block">Kapanmamış Faturalar</span>
         </div>
-        
+
         <div className="mt-4">
           <Table
             bordered
@@ -151,29 +116,7 @@ export default function UnclosedInvoices() {
           />
         </div>
 
-        <div className="w-full flex flex-wrap relative mt-10">
-          <div className="mb-4 flex flex-wrap justify-center items-center w-full">
-            <span className="text-2xl text-gray-800 font-bold inline-block">Günlük Kur</span>
-          </div>
-
-          <div className="flex flex-wrap w-full lg:w-1/3 relative p-3">
-            <div className="w-full relative bg-white rounded-xl shadow">
-              <DailyRate data={34.15} type="$" key="dr1" />
-            </div>
-          </div>
-
-          <div className="flex flex-wrap w-full lg:w-1/3 relative p-3">
-            <div className="w-full relative bg-white rounded-xl shadow">
-              <DailyRate data={38.21} type="€" key="dr2" />
-            </div>
-          </div>
-
-          <div className="flex flex-wrap w-full lg:w-1/3 relative p-3">
-            <div className="w-full relative bg-white rounded-xl shadow">
-              <DailyRate data={45.77} type="£" key="dr3" />
-            </div>
-          </div>
-        </div>
+        <CurrentRate />
       </div>
 
       <Modal size="xl" isOpen={isOpen} onOpenChange={onOpenChange}>

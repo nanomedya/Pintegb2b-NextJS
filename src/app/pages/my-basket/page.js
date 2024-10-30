@@ -16,6 +16,8 @@ import Purchases from "@/components/Items/popupModels/purchases";
 import Alternative from "@/components/Items/popupModels/alternative";
 import GeneralInfo from "@/components/Items/popupModels/generalInfo";
 import Oem from "@/components/Items/popupModels/oem";
+import CurrentRate from "@/components/Items/CurrentRate";
+import ProductModal from "@/components/Elements/productModal";
 
 export default function MyBasket() {
   const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
@@ -237,26 +239,7 @@ export default function MyBasket() {
           </div>
         </div>
 
-        <div className="w-full flex flex-wrap relative mt-10">
-          <div className="mb-4 flex flex-wrap justify-center items-center w-full">
-            <span className="text-2xl text-gray-800 font-bold inline-block">Günlük Kur</span>
-          </div>
-          <div className="flex flex-wrap w-full lg:w-1/3 relative p-3">
-            <div className="w-full relative bg-white rounded-xl shadow">
-              <DailyRate data={34.15} type="$" key="dr1" />
-            </div>
-          </div>
-          <div className="flex flex-wrap w-full lg:w-1/3 relative p-3">
-            <div className="w-full relative bg-white rounded-xl shadow">
-              <DailyRate data={38.21} type="€" key="dr2" />
-            </div>
-          </div>
-          <div className="flex flex-wrap w-full lg:w-1/3 relative p-3">
-            <div className="w-full relative bg-white rounded-xl shadow">
-              <DailyRate data={45.77} type="£" key="dr3" />
-            </div>
-          </div>
-        </div>
+        <CurrentRate />
       </div>
 
       {offerModal && (<div className="offer-modal">
@@ -273,48 +256,14 @@ export default function MyBasket() {
         </motion.div>
       </div>)}
 
-      <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {modalId === 1 ?
-            <>
-              <ModalHeader className="flex flex-col gap-1 text-warning">Deneme Ürün</ModalHeader>
-              <ModalBody>
-                <div className="w-full flex justify-start">
-                  <div onClick={() => setActiveTab(1)} className={`border border-succcess ${activeTab === 1 ? "bg-success" : null} ${activeTab === 1 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Önceki Alımlar</div>
-                  <div onClick={() => setActiveTab(2)} className={`border border-succcess ${activeTab === 2 ? "bg-success" : null} ${activeTab === 2 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Alternatifler</div>
-                  <div onClick={() => setActiveTab(3)} className={`border border-succcess ${activeTab === 3 ? "bg-success" : null} ${activeTab === 3 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Genel Bilgiler</div>
-                  <div onClick={() => setActiveTab(4)} className={`border border-succcess ${activeTab === 4 ? "bg-success" : null} ${activeTab === 4 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Oem Kodlar</div>
-                  <div onClick={() => setActiveTab(5)} className={`border border-succcess ${activeTab === 5 ? "bg-success" : null} ${activeTab === 5 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Rakip Kodlar</div>
-                  <div onClick={() => setActiveTab(6)} className={`border border-succcess ${activeTab === 6 ? "bg-success" : null} ${activeTab === 6 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Araç</div>
-                  <div onClick={() => setActiveTab(7)} className={`border border-succcess ${activeTab === 7 ? "bg-success" : null} ${activeTab === 7 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Oem</div>
-                  <div onClick={() => setActiveTab(8)} className={`border border-succcess ${activeTab === 8 ? "bg-success" : null} ${activeTab === 8 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Rakip Kod</div>
-                  <div onClick={() => setActiveTab(9)} className={`border border-succcess ${activeTab === 9 ? "bg-success" : null} ${activeTab === 9 ? "text-white" : "text-success"} cursor-pointer hover:shadow rounded-xl px-2 py-1 mr-1`}>Markalar</div>
-                </div>
-                {activeTab === 1 ? <Purchases /> : null}
-                {activeTab === 2 ? <Alternative /> : null}
-                {activeTab === 3 ? <GeneralInfo /> : null}
-                {activeTab === 4 ? null : null}
-                {activeTab === 5 ? null : null}
-                {activeTab === 6 ? null : null}
-                {activeTab === 7 ? <Oem /> : null}
-                {activeTab === 8 ? null : null}
-                {activeTab === 9 ? null : null}
-              </ModalBody>
-              <ModalFooter className="flex justify-end">
-                <Button className="text-warning border border-warning bg-white" onPress={onClose}>Kapat</Button>
-                <Button color="warning" className="text-white" onPress={onClose}>Sepete Ekle</Button>
-              </ModalFooter>
-            </> : null}
-          {
-            modalId === 2 ?
-              <>
-                <ModalHeader className="flex flex-col gap-1 text-warning">Alternatif Ürünler</ModalHeader>
-                <Alternative />
-              </>
-              : null
-          }
-        </ModalContent>
-      </Modal>
+      <ProductModal
+        modalId={modalId}
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpenChange={onOpenChange}
+        setActiveTab={setActiveTab}
+        activeTab={activeTab}
+      />
     </GuestLayout>
   );
 }

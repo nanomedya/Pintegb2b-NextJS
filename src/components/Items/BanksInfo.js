@@ -5,7 +5,9 @@ import { Copy } from 'react-feather'
 import { handleCopy } from '../Elements/copy'
 import { banks } from '../Elements/data'
 
-const BanksInfo = ({ visible, setVisible }) => {
+const BanksInfo = () => {
+    const [visible, setVisible] = React.useState(false);
+
     return (
         <div className="w-full flex flex-wrap relative mt-10 p-3">
             <div className="mb-4 flex flex-wrap justify-start items-center w-full">

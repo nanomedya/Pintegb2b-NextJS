@@ -3,14 +3,12 @@ import React from "react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
-import DailyRate from "@/components/Items/DailyRate";
 import BanksInfo from "@/components/Items/BanksInfo";
 import Card from "./card";
 import { images } from "@/components/Elements/data";
+import CurrentRate from "@/components/Items/CurrentRate";
 
 export default function Contact() {
-    const [visible, setVisible] = React.useState(false);
-
     return (
         <GuestLayout>
             <NavbarWrapper />
@@ -28,31 +26,9 @@ export default function Contact() {
                     <Card title="İstanbul" />
                 </div>
 
-                <div className="w-full flex flex-wrap relative mt-10">
-                    <div className="mb-4 flex flex-wrap justify-center items-center w-full">
-                        <span className="text-2xl text-gray-800 font-bold inline-block">Günlük Kur</span>
-                    </div>
+                <CurrentRate />
 
-                    <div className="flex flex-wrap w-full lg:w-1/3 relative p-3">
-                        <div className="w-full relative bg-white rounded-xl shadow">
-                            <DailyRate data={34.15} type="$" key="dr1" />
-                        </div>
-                    </div>
-
-                    <div className="flex flex-wrap w-full lg:w-1/3 relative p-3">
-                        <div className="w-full relative bg-white rounded-xl shadow">
-                            <DailyRate data={38.21} type="€" key="dr2" />
-                        </div>
-                    </div>
-
-                    <div className="flex flex-wrap w-full lg:w-1/3 relative p-3">
-                        <div className="w-full relative bg-white rounded-xl shadow">
-                            <DailyRate data={45.77} type="£" key="dr3" />
-                        </div>
-                    </div>
-                </div>
-
-                <BanksInfo visible={visible} setVisible={setVisible} />
+                <BanksInfo />
             </div>
         </GuestLayout>
     );
