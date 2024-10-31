@@ -1,9 +1,14 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
 import React from 'react'
-import Purchases from '../Items/popupModels/purchases'
-import Alternative from '../Items/popupModels/alternative'
-import GeneralInfo from '../Items/popupModels/generalInfo'
-import Oem from '../Items/popupModels/oem'
+import Purchases from '../Items/PopupModels/purchases'
+import Alternative from '../Items/PopupModels/alternative'
+import GeneralInfo from '../Items/PopupModels/generalInfo'
+import Oem from '../Items/PopupModels/oem'
+import Car from '../Items/PopupModels/car'
+import Brand from '../Items/PopupModels/brand'
+import CompetitorCode from '../Items/PopupModels/competitorCode'
+import CompetitorCodes from '../Items/PopupModels/competitorCodes'
+import OemCodes from '../Items/PopupModels/oemCodes'
 
 const ProductModal = ({ modalId, isOpen, onClose, onOpenChange, setActiveTab, activeTab }) => {
     return (
@@ -26,12 +31,12 @@ const ProductModal = ({ modalId, isOpen, onClose, onOpenChange, setActiveTab, ac
                         {activeTab === 1 ? <Purchases /> : null}
                         {activeTab === 2 ? <Alternative /> : null}
                         {activeTab === 3 ? <GeneralInfo /> : null}
-                        {activeTab === 4 ? null : null}
-                        {activeTab === 5 ? null : null}
-                        {activeTab === 6 ? null : null}
+                        {activeTab === 4 ? <OemCodes /> : null}
+                        {activeTab === 5 ? <CompetitorCodes /> : null}
+                        {activeTab === 6 ? <Car /> : null}
                         {activeTab === 7 ? <Oem /> : null}
-                        {activeTab === 8 ? null : null}
-                        {activeTab === 9 ? null : null}
+                        {activeTab === 8 ? <CompetitorCode /> : null}
+                        {activeTab === 9 ? <Brand /> : null}
                     </ModalBody>
                     <ModalFooter className="flex justify-end">
                         <Button className="text-warning border border-warning bg-white" onPress={onClose}>Kapat</Button>

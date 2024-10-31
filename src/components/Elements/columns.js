@@ -188,6 +188,7 @@ export const oemColumns = [
         title: "",
         width: 50,
         key: "field1",
+        dataIndex: "id"
     },
     {
         title: "Alan-1",
@@ -195,6 +196,344 @@ export const oemColumns = [
         dataIndex: "field1",
     },
 ]
+
+export const oemCodesColumns = [
+    {
+        title: "",
+        width: 50,
+        key: "field1",
+        dataIndex: "id"
+    },
+    {
+        title: "Alan-1",
+        key: "field1",
+        dataIndex: "field1",
+    },
+]
+
+export const competitorCodeColumns = [
+    {
+        title: "",
+        width: 50,
+        key: "field1",
+        dataIndex: "id"
+    },
+    {
+        title: "Alan-1",
+        key: "field1",
+        dataIndex: "field1",
+    },
+]
+
+export const competitorCodesColumns = [
+    {
+        title: "",
+        width: 50,
+        key: "field1",
+        dataIndex: "id"
+    },
+    {
+        title: "Alan-1",
+        key: "field1",
+        dataIndex: "field1",
+    },
+]
+
+export const carColumns = [
+    {
+        title: "",
+        width: 50,
+        key: "id",
+        dataIndex: "id"
+    },
+    {
+        title: "Araçlar",
+        key: "field1",
+        dataIndex: "field1",
+    },
+]
+
+export const brandColumns = [
+    {
+        title: "",
+        width: 50,
+        key: "id",
+        dataIndex: "id"
+    },
+    {
+        title: "Markalar",
+        key: "field1",
+        dataIndex: "field1",
+    },
+]
+
+export const myOrdersColumns = [
+    {
+        title: "",
+        key: "id",
+        width: 70,
+        render: (e) => <Tooltip className="cursor-pointer" title={() => imgProp(e.logo)}><img src={e.logo} alt="" style={{ width: 50 }} /></Tooltip>
+    },
+    {
+        title: "No",
+        key: "code",
+        render: (e) => <span className="text-gray-500 font-sans">{e.code}</span>
+    },
+    {
+        title: "Transfer Mes.",
+        key: "stock",
+        render: (e) => <span className="text-gray-500 font-sans">{e.transferMes}</span>
+    },
+    {
+        title: "Oluşturan",
+        key: "created",
+        render: (e) => <span className="text-gray-500 font-sans">{e.created}</span>
+    },
+    {
+        title: "Kullanıcı",
+        key: "user",
+        render: (e) => <span className="text-gray-500 font-sans">{e.user}</span>
+    },
+    {
+        title: "Sipariş Durumu",
+        key: "name",
+        width: 140,
+        render: (e) => e.orderStatus ? <span className="bg-success text-white py-1 rounded px-2">Onaylandı</span> : <span className="bg-danger text-white py-1 rounded px-2">İptal Edildi</span>
+    },
+    {
+        title: "Tutar",
+        key: "price",
+        render: (e) => <span className="text-gray-500 font-sans">{e.price} ₺</span>
+    },
+    {
+        title: "Net Tutar",
+        key: "netPrice",
+        render: (e) => <span className="text-gray-500 font-sans">{e.netPrice} ₺</span>
+    },
+    {
+        title: "İskonto",
+        key: "discount",
+        render: (e) => <span className="text-gray-500 font-sans">{e.discount} ₺</span>
+    },
+    {
+        title: "Satış Tutarı",
+        key: "salesPrice",
+        render: (e) => <span className="text-gray-500 font-sans">{e.salesPrice} ₺</span>
+    },
+    {
+        title: "İşlemler",
+        width: 100,
+        render: (e) => (
+            <div className='flex justify-start'>
+                <div className='ml-2'>
+                    <Dropdown overlay={editMenu} trigger={['click']}>
+                        <Tooltip title="Seçenekler">
+                            <Button2 icon={<AlignJustify size={20} className='text-warning' />} />
+                        </Tooltip>
+                    </Dropdown>
+                </div>
+            </div>
+        )
+    }
+]
+
+export const myBackOrdersColumns = [
+    {
+        title: "",
+        key: "id",
+        width: 70,
+        render: (e) => <Tooltip className="cursor-pointer" title={() => imgProp(e.logo)}><img src={e.logo} alt="" style={{ width: 50 }} /></Tooltip>
+    },
+    {
+        title: "No",
+        key: "code",
+        render: (e) => <span className="text-gray-500 font-sans">{e.code}</span>
+    },
+    {
+        title: "Transfer Mes.",
+        key: "stock",
+        render: (e) => <span className="text-gray-500 font-sans">{e.transferMes}</span>
+    },
+    {
+        title: "Oluşturan",
+        key: "created",
+        render: (e) => <span className="text-gray-500 font-sans">{e.created}</span>
+    },
+    {
+        title: "Kullanıcı",
+        key: "user",
+        render: (e) => <span className="text-gray-500 font-sans">{e.user}</span>
+    },
+    {
+        title: "Sipariş Durumu",
+        key: "name",
+        width: 140,
+        render: (e) => e.orderStatus ? <span className="bg-success text-white py-1 rounded px-2">Onaylandı</span> : <span className="bg-danger text-white py-1 rounded px-2">İptal Edildi</span>
+    },
+    {
+        title: "Tutar",
+        key: "price",
+        render: (e) => <span className="text-gray-500 font-sans">{e.price} ₺</span>
+    },
+    {
+        title: "Net Tutar",
+        key: "netPrice",
+        render: (e) => <span className="text-gray-500 font-sans">{e.netPrice} ₺</span>
+    },
+    {
+        title: "İskonto",
+        key: "discount",
+        render: (e) => <span className="text-gray-500 font-sans">{e.discount} ₺</span>
+    },
+    {
+        title: "Satış Tutarı",
+        key: "salesPrice",
+        render: (e) => <span className="text-gray-500 font-sans">{e.salesPrice} ₺</span>
+    },
+    {
+        title: "İşlemler",
+        width: 100,
+        render: (e) => (
+            <div className='flex justify-start'>
+                <div className='ml-2'>
+                    <Dropdown overlay={editMenu} trigger={['click']}>
+                        <Tooltip title="Seçenekler">
+                            <Button2 icon={<AlignJustify size={20} className='text-warning' />} />
+                        </Tooltip>
+                    </Dropdown>
+                </div>
+            </div>
+        )
+    }
+]
+
+export const invoicesColumns = ({ toggleOfferModal }) => [
+    {
+        title: "ID",
+        key: "id",
+        width: 50,
+        dataIndex: "id"
+    },
+    {
+        title: <div className="flex justify-center w-full"><Eye size={15} /></div>,
+        key: "name",
+        width: 50,
+        render: (e) => <div>
+            <div className="flex justify-start items-center">
+                <div onClick={toggleOfferModal} className="cursor-pointer"><Eye size={15} /></div>
+            </div>
+        </div>
+    },
+    {
+        title: "Fatura No",
+        key: "invoiceNo",
+        dataIndex: "invoiceNo",
+    },
+    {
+        title: "Fatura Tarihi",
+        key: "invoiceDate",
+        dataIndex: "invoiceDate",
+    },
+    {
+        title: "Fatura No",
+        key: "invoiceNo",
+        dataIndex: "invoiceNo",
+    },
+    {
+        title: "Vade Tarihi",
+        key: "maturityDate",
+        dataIndex: "maturityDate",
+    },
+    {
+        title: "İşlem Türü",
+        key: "processType",
+        dataIndex: "processType",
+    },
+    {
+        title: "Borç",
+        key: "debt",
+        render: (e) => <span>{e.debt} ₺</span>
+    },
+    {
+        title: "Alacak",
+        key: "willTake",
+        render: (e) => <span>{e.willTake} ₺</span>
+    },
+    {
+        title: "Bakiye",
+        key: "balance",
+        render: (e) => <span>{e.balance} ₺</span>
+    },
+    {
+        title: "Açıklama",
+        key: "description",
+        dataIndex: "description",
+    }
+];
+
+export const unClosedInvoicesColumns = ({ toggleOfferModal }) => [
+    {
+        title: "ID",
+        key: "id",
+        width: 50,
+        dataIndex: "id"
+    },
+    {
+        title: <div className="flex justify-center w-full"><Eye size={15} /></div>,
+        key: "name",
+        width: 50,
+        render: (e) => <div>
+            <div className="flex justify-start items-center">
+                <div onClick={toggleOfferModal} className="cursor-pointer"><Eye size={15} /></div>
+            </div>
+        </div>
+    },
+    {
+        title: "Fatura No",
+        key: "invoiceNo",
+        dataIndex: "invoiceNo",
+    },
+    {
+        title: "Fatura Tarihi",
+        key: "invoiceDate",
+        dataIndex: "invoiceDate",
+    },
+    {
+        title: "Fatura No",
+        key: "invoiceNo",
+        dataIndex: "invoiceNo",
+    },
+    {
+        title: "Vade Tarihi",
+        key: "maturityDate",
+        dataIndex: "maturityDate",
+    },
+    {
+        title: "İşlem Türü",
+        key: "processType",
+        dataIndex: "processType",
+    },
+    {
+        title: "Borç",
+        key: "debt",
+        render: (e) => <span>{e.debt} ₺</span>
+    },
+    {
+        title: "Alacak",
+        key: "willTake",
+        render: (e) => <span>{e.willTake} ₺</span>
+    },
+    {
+        title: "Bakiye",
+        key: "balance",
+        render: (e) => <span>{e.balance} ₺</span>
+    },
+    {
+        title: "Açıklama",
+        key: "description",
+        dataIndex: "description",
+    }
+];
 
 export const columns = ({ setModalId, onOpen, toggleOfferModal }) => [
     {

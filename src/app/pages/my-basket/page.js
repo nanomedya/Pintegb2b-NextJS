@@ -12,10 +12,10 @@ import OfferItem from "@/components/Items/offerItem";
 import { motion } from "framer-motion";
 import { DATA, images } from "@/components/Elements/data";
 import { offerVariant } from "@/components/Elements/offerVariant";
-import Purchases from "@/components/Items/popupModels/purchases";
-import Alternative from "@/components/Items/popupModels/alternative";
-import GeneralInfo from "@/components/Items/popupModels/generalInfo";
-import Oem from "@/components/Items/popupModels/oem";
+import Purchases from "@/components/Items/PopupModels/purchases";
+import Alternative from "@/components/Items/PopupModels/alternative";
+import GeneralInfo from "@/components/Items/PopupModels/generalInfo";
+import Oem from "@/components/Items/PopupModels/oem";
 import CurrentRate from "@/components/Items/CurrentRate";
 import ProductModal from "@/components/Elements/productModal";
 

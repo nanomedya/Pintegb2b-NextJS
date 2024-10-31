@@ -1,96 +1,44 @@
 "use client"
-import React from "react";
+import React, { useEffect } from "react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import NavbarWrapper from "@/components/Items/NavbarWrapper";
 import Stories from "@/components/Items/Stories";
-import DailyRate from "@/components/Items/DailyRate";
-import { Table, Tooltip, Button as Button2 } from "antd";
 import { list, carsGroup, storeGroup } from "@/app/data/search_data";
-import { Eye, Search, ShoppingCart } from "react-feather";
-import { Button, Checkbox, Input, Modal, ModalHeader, ModalBody, ModalFooter, Select, SelectItem, Tab, Tabs, useDisclosure, ModalContent } from "@nextui-org/react";
-import { DATA, images } from "@/components/Elements/data";
+import { Search } from "react-feather";
+import { Button, Checkbox, Input, Select, SelectItem, Tab, Tabs, useDisclosure } from "@nextui-org/react";
+import { images } from "@/components/Elements/data";
 import CurrentRate from "@/components/Items/CurrentRate";
+import Products from "@/components/Items/Products";
+import OfferModal from "@/components/Items/OfferModal";
+import ProductModal from "@/components/Elements/productModal";
 
 export default function NewProduct() {
-  const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const [modalId, setModalId] = React.useState(1)
+  const [seconds, setSeconds] = React.useState(223235);
+  const [offerModal, setOfferModal] = React.useState(false)
+  const [activeTab, setActiveTab] = React.useState(1);
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  const toggleOfferModal = () => setOfferModal(!offerModal)
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds((prevSeconds) => {
+        if (prevSeconds <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prevSeconds - 1;
+      });
+    }, 1000);
 
-  const columns = [
-    {
-      title: "",
-      key: "productID",
-      width: 70,
-      render: (e) => <img src={e.logo} alt="" style={{ width: 50 }} />
-    },
-    {
-      title: "ID",
-      key: "productID",
-      dataIndex: "productID",
-      width: 30
-    },
-    {
-      title: "Ürün Kodu",
-      key: "code",
-      render: (e) => <span className="text-gray-500 font-sans">{e.code}</span>
-    },
-    {
-      title: "Ürün Adı",
-      key: "name",
-      render: (e) => <span className="text-gray-500 font-sans">{e.name}</span>
-    },
-    {
-      title: "Stok",
-      key: "stock",
-      render: (e) => <span className="text-gray-500 font-sans">{e.stock}</span>
-    },
-    {
-      title: "Fiyat",
-      key: "price",
-      render: (e) => <span className="text-gray-500 font-sans">{e.price} ₺</span>
-    },
-    {
-      title: "Alan 1",
-      key: "title",
-      render: (e) => <span className="text-gray-500 font-sans">{e.title}</span>
-    },
-    {
-      title: "Alan 2",
-      key: "name",
-      render: (e) => <span className="text-gray-500 font-sans">{e.name}</span>
-    },
-    {
-      title: "Alan 3",
-      key: "title",
-      render: (e) => <span className="text-gray-500 font-sans">{e.title}</span>
-    },
-    {
-      title: "İşlemler",
-      width: 100,
-      render: (e) => (
-        <div className='flex justify-start'>
-          <div className='ml-2'>
-            <Tooltip title="İncele">
-              <Button2 className='border-warning text-warning' icon={<Eye size={20} className='text-warning' />} onClick={onOpen} />
-            </Tooltip>
-          </div>
-          <div className='ml-2'>
-            <Tooltip title="Sepete Ekle">
-              <Button2 icon={<ShoppingCart size={20} className='text-success' />} />
-            </Tooltip>
-          </div>
-        </div>
-      )
-    }
-  ];
+    return () => clearInterval(interval);
+  }, []);
+
+  const days = Math.floor(seconds / (24 * 60 * 60)).toString().length === 1 ? `0${Math.floor(seconds / (24 * 60 * 60))}` : Math.floor(seconds / (24 * 60 * 60));
+  const hours = Math.floor((seconds % (24 * 60 * 60)) / 3600).toString().length === 1 ? `0${Math.floor((seconds % (24 * 60 * 60)) / 3600)}` : Math.floor((seconds % (24 * 60 * 60)) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60).toString().length === 1 ? `0${Math.floor((seconds % 3600) / 60)}` : Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = (seconds % 60).toString().length === 1 ? `0${seconds % 60}` : seconds % 60;
 
   return (
     <GuestLayout>
@@ -211,49 +159,32 @@ export default function NewProduct() {
           </div>
         </div>
 
-        <div className="mt-4">
-          <Table
-            bordered
-            columns={columns}
-            dataSource={DATA}
-            rowKey='productID'
-            rowSelection={rowSelection}
-            scroll={{ x: 'max-content' }}
-            className="product shadow-sm rounded"
-            locale={{ emptyText: 'Gösterilecek veri yok 😔' }}
-          />
-        </div>
+        <Products
+          setModalId={setModalId}
+          onOpen={onOpen}
+          toggleOfferModal={toggleOfferModal}
+        />
 
         <CurrentRate />
       </div>
 
-      <Modal size="xl" isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1 text-warning">Deneme Ürün</ModalHeader>
-              <ModalBody>
-                <div className="flex justify-start items-center w-full">
-                  <div className="w-40"><img src="/items/balata.png" alt="" style={{ objectFit: 'cover' }} /></div>
-                  <div className="ml-4">
-                    <div className="mb-2"><span className="text-warning">Ürün Adı: </span><strong className="text-warning">Deneme Ürün</strong></div>
-                    <div className="mb-2"><span className="text-black">Ürün Kodu: </span><strong className="text-black">XF53FG</strong></div>
-                    <div className="mb-2"><span className="text-black">Stok: </span><strong className="text-black">145</strong></div>
-                    <div className="mb-2"><span className="text-black">Fiyat: </span><strong className="text-black">123 ₺</strong></div>
-                    <div className="mb-2"><span className="text-black">Alan 1: </span><strong className="text-black">FG+453</strong></div>
-                    <div className="mb-2"><span className="text-black">Alan 2: </span><strong className="text-black">GHKE56</strong></div>
-                    <div className="mb-2"><span className="text-black">Alan 3: </span><strong className="text-black">23RTGS</strong></div>
-                  </div>
-                </div>
-              </ModalBody>
-              <ModalFooter className="flex justify-end">
-                <Button className="text-warning border border-warning bg-white" onPress={onClose}>Kapat</Button>
-                <Button color="warning" className="text-white" onPress={onClose}>Sepete Ekle</Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <OfferModal
+        offerModal={offerModal}
+        toggleOfferModal={toggleOfferModal}
+        days={days}
+        hours={hours}
+        minutes={minutes}
+        remainingSeconds={remainingSeconds}
+      />
+
+      <ProductModal
+        modalId={modalId}
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpenChange={onOpenChange}
+        setActiveTab={setActiveTab}
+        activeTab={activeTab}
+      />
     </GuestLayout>
   );
 }
