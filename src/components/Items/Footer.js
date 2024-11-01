@@ -121,14 +121,12 @@ export default function Footer() {
                                 Geliştiriciler için
                             </Link>
                             <Link
-                                isExternal
                                 className="footer_link text-warning text-sm font-sans"
                                 href="/pages/info/about"
                             >
                                 Hakkında
                             </Link>
                             <Link
-                                isExternal
                                 className="footer_link text-warning text-sm font-sans"
                                 href="/pages/info/help-contact"
                             >
