@@ -5,10 +5,19 @@ import GuestLayout from "@/components/Layouts/GuestLayout";
 import AuthCard from "@/components/Items/AuthCard";
 import { Eye, EyeOff } from 'react-feather'
 import AcmeLogo from "@/components/Items/AcmeLogo";
+import { useDispatch } from "react-redux";
+import { fetchLogin } from "@/redux/slices/loginSlice";
 
 export default function Login() {
+  const dispatch = useDispatch()
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
+  const [formData, setFormData] = React.useState({ email: "", password: "" });
+
+  const fetchData = async () => {
+    var data = await dispatch(fetchLogin({ email: formData.email, password: formData.password }))
+    console.log(data)
+  }
 
   return (
     <GuestLayout>
@@ -22,6 +31,7 @@ export default function Login() {
             label="Kullanıcı Adı"
             variant="bordered"
             placeholder="Kullanıcı adınızı girin"
+            onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
             onClear={() => console.log("input cleared")}
           />
 
@@ -29,6 +39,7 @@ export default function Login() {
             label="Şifre"
             variant="bordered"
             placeholder="Şifrenizi girin"
+            onChange={e => setFormData(prev => ({ ...prev, password: e.target.value }))}
             endContent={
               <button className="focus:outline-none" type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
                 {isVisible ? (
@@ -50,7 +61,7 @@ export default function Login() {
           </div>
 
           <div className="flex items-center justify-center mt-3">
-            <Button color="warning"><Link href="/pages/home" className="text-white">Giriş Yap</Link></Button>
+            <Button color="warning" onClick={fetchData}>Giriş Yap</Button>
           </div>
           <div className="flex items-center justify-center mt-2">
             <span className="text-slate-500 text-sm text-small">ya da</span>
