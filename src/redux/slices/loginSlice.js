@@ -9,13 +9,15 @@ export const fetchLogin = createAsyncThunk(
     }
 );
 
+const initialState = {
+    data: null,
+    status: 'idle',
+    token: null,
+};
+
 const loginSlice = createSlice({
     name: 'login',
-    initialState: {
-        data: null,
-        status: 'idle',
-        token: null,
-    },
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
@@ -25,8 +27,10 @@ const loginSlice = createSlice({
             .addCase(fetchLogin.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.data = action.payload;
-                if (action.payload)
+                if (action.payload && typeof window !== "undefined") {
+                    window.localStorage.setItem("token", action.payload.access_token);
                     state.token = action.payload.access_token;
+                }
             })
             .addCase(fetchLogin.rejected, (state) => {
                 state.status = 'failed';

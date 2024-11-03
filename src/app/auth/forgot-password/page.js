@@ -3,13 +3,9 @@ import React from "react";
 import { Link, Input, Button } from "@nextui-org/react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import AuthCard from "@/components/Items/AuthCard";
-import { Eye, EyeOff } from 'react-feather'
 import AcmeLogo from "@/components/Items/AcmeLogo";
 
 export default function ForgotPassword() {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
-
   return (
     <GuestLayout>
       <AuthCard logo={

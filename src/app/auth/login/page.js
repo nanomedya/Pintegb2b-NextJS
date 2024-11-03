@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { fetchLogin } from "@/redux/slices/loginSlice";
 import { Link, Input, Button } from "@nextui-org/react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
@@ -12,7 +12,9 @@ import AcmeLogo from "@/components/Items/AcmeLogo";
 
 export default function Login() {
   const dispatch = useDispatch();
-  const { data, status, token } = useSelector((state) => state.login);
+  const router = useRouter();
+  var token = useSelector((state) => state.login.token);
+  var status = useSelector((state) => state.login.status);
 
   const [isVisible, setIsVisible] = React.useState(false);
   const [formData, setFormData] = React.useState({ email: "", password: "" });
@@ -25,14 +27,10 @@ export default function Login() {
   };
 
   useEffect(() => {
-    // Tarayıcıda olduğumuzu kontrol ediyoruz
-    if (typeof window !== 'undefined') {
-
-      if (status === 'succeeded' && token) {
-        window.location.href = '/pages/home';
-      }
+    if (status === 'succeeded' && token) {
+      router.push('/pages/home');
     }
-  }, [status, token]);
+  }, [status, token, router]);
 
   return (
     <GuestLayout>

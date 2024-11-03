@@ -4,16 +4,16 @@ import { Navbar, NavbarBrand, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, Navb
 import AcmeLogo from "./AcmeLogo.jsx";
 import { Bell, Box, CreditCard, FileText, Home, List, MapPin, ShoppingCart } from "react-feather";
 import { MenuItem } from "../Elements/MenuItem.js";
+import { useDispatch, useSelector } from "react-redux";
+import { usePathname, useRouter } from "next/navigation";
+import { fetchUser } from "@/redux/slices/userSlice.js";
 
 export default function NavbarWrapper() {
+  const dispatch = useDispatch()
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [path, setPath] = React.useState("");
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setPath(window.location.pathname);
-    }
-  }, []);
+  const user = useSelector((state) => state.user)
+  const router = useRouter()
+  const path = usePathname()
 
   const menuItems = [
     { label: "Anasayfa", link: "home" },
@@ -24,6 +24,15 @@ export default function NavbarWrapper() {
     { label: "Ödeme Yap", link: "pay" },
     { label: "İletişim", link: "contact" },
   ];
+
+  const logout = () => {
+    window.localStorage.clear()
+    router.push("/")
+  }
+
+  useEffect(() => {
+    dispatch(fetchUser())
+  }, [dispatch])
 
   return (
     <Navbar
@@ -46,7 +55,6 @@ export default function NavbarWrapper() {
         <NavbarBrand>
           <Link href="/pages/home"><AcmeLogo className="h-14" /></Link>
         </NavbarBrand>
-
 
         <NavbarItem isActive>
           <MenuItem
@@ -165,8 +173,8 @@ export default function NavbarWrapper() {
 
             <div className="flex items-center gap-2 cursor-pointer">
               <User
-                name="FERHAT USTA"
-                description="905323906694"
+                name={user.data && user.data.name}
+                description={user.data && user.data.email}
                 avatarProps={{
                   src: "https://i.pravatar.cc/150?img=8",
                   isBordered: true,
@@ -184,8 +192,8 @@ export default function NavbarWrapper() {
             </DropdownItem>
             <DropdownItem textValue="settings" key="settings"><Link className="w-full text-black font-normal" href="/pages/settings">Ayarlar</Link></DropdownItem>
             <DropdownItem textValue="help_and_feedback" key="help_and_feedback"><Link className="w-full text-black font-normal" href="/pages/help-feedback">Yardım & Geri bildirim</Link></DropdownItem>
-            <DropdownItem textValue="logout" key="logout" color="danger">
-              <Link className="w-full text-black font-normal" href="/">Güvenli Çıkış</Link>
+            <DropdownItem textValue="logout" className="text-black" key="logout" color="danger" onClick={logout}>
+              Güvenli Çıkış
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

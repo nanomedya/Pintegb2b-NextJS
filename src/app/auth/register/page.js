@@ -3,14 +3,10 @@ import React from "react";
 import { Link, Input, Button, Select, SelectItem } from "@nextui-org/react";
 import GuestLayout from "@/components/Layouts/GuestLayout";
 import AuthCard from "@/components/Items/AuthCard";
-import { Eye, EyeOff } from 'react-feather'
 import AcmeLogo from "@/components/Items/AcmeLogo";
 import { Cities } from "@/components/Elements/cities";
 
 export default function Register() {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
-
   return (
     <GuestLayout>
       <AuthCard logo={

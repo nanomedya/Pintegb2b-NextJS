@@ -17,6 +17,7 @@ import { Line, Bar, Doughnut } from 'react-chartjs-2';
 Chart.register(CategoryScale, RadialLinearScale, LinearScale, PointElement, LineElement, BarElement, ArcElement);
 
 export default function Home() {
+
   const data = {
     labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs'],
     datasets: [
@@ -65,7 +66,6 @@ export default function Home() {
     ],
   };
 
-
   const images2 = [
     {
       title: "slayt 1",
@@ -90,9 +90,7 @@ export default function Home() {
 
   return (
     <GuestLayout>
-
       <NavbarWrapper />
-
 
       <div className="mx-auto container">
         <div className="w-full relative mt-10">
