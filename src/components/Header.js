@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import logo from '../images/logo.png'
 import person from '../images/150.jpeg'
-import { ArrowDown, Bell, Box, CreditCard, FileText, Home, List, ShoppingCart } from 'react-feather'
+import { ArrowDown, Bell, Box, CreditCard, FileText, Home, List, MapPin, ShoppingCart } from 'react-feather'
 import { Link, useNavigate } from 'react-router-dom'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, } from 'reactstrap';
 import { AnimatePresence, motion } from 'framer-motion'
 import { mobilVariant } from './Animation'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchUser } from '../redux/slices/userSlice'
 
 const Header = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+    const user = useSelector((state) => state.user.data)
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownOpen2, setDropdownOpen2] = useState(false);
     const [dropdownOpen3, setDropdownOpen3] = useState(false);
@@ -29,6 +33,7 @@ const Header = () => {
     }
 
     useEffect(() => {
+        dispatch(fetchUser())
         setPath(window.location.pathname)
     }, [])
 
@@ -82,6 +87,12 @@ const Header = () => {
                                 <DropdownItem><Link className={path === "/invoice/debt-status" ? "active" : "w-100"} to="/invoice/debt-status">Borç Durumu</Link></DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
+                        <div>
+                            <Link to="/contact" className={path === "/contact" ? "active" : ""}>
+                                <div><MapPin /></div>
+                                <div><span>İletişim</span></div>
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className='right'>
@@ -155,6 +166,7 @@ const Header = () => {
                             <div className='mt-2'><Link to="/order" className='text-dark'>Siparişler</Link></div>
                             <div className='mt-2'><Link to="/" className='text-dark'>Cari Hesap</Link></div>
                             <div className='mt-2'><Link to="/pay" className='text-danger'>Ödeme Yap</Link></div>
+                            <div className='mt-2'><Link to="/contact" className='text-danger'>İletişim</Link></div>
                         </div>
                     </motion.div>)}
             </AnimatePresence>

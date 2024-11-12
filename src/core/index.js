@@ -41,7 +41,7 @@ export async function dealerLogin(email, password) {
 }
 
 export function getUser() {
-    const token = localStorage.getItem("auth") === null ? null : JSON.parse(localStorage.getItem("auth"));
+    const token = localStorage.getItem("auth") === null ? null : JSON.parse(localStorage.getItem("auth")).access_token;
     return axios.get(userURL, { headers: { "Authorization": `Bearer ${token}` } })
         .then(res => res.data)
         .catch(error => toast.error(error.response?.data?.message || "Kullanıcı bilgisi alınamadı."));

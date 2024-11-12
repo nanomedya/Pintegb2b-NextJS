@@ -797,7 +797,10 @@ input[type="number"] {
 
 .login input,
 .register input,
-.forgot input {
+.forgot input,
+.pay input,
+.profile-page input,
+.pay textarea {
     height: 60px;
     padding-top: 25px;
     font-size: 14px;
@@ -806,13 +809,17 @@ input[type="number"] {
 
 .login .item,
 .register .item,
-.forgot .item {
+.forgot .item,
+.pay .item,
+.profile-page .item {
     position: relative;
 }
 
 .login small,
 .register small,
-.forgot small {
+.forgot small,
+.pay small,
+.profile-page small {
     display: block;
     font-size: 12px;
     position: absolute;
@@ -838,6 +845,114 @@ input[type="number"] {
 }
 
 /* login END */
+
+
+/* contact */
+
+.contact {
+    padding: 30px 70px;
+}
+
+.contact .card {
+    padding: 40px;
+}
+
+.contact h3 {
+    font-weight: 700;
+}
+
+/* contact END */
+
+
+/* pay */
+
+.pay {
+    padding: 30px 70px;
+}
+
+.pay h4 {
+    font-weight: 700;
+}
+
+.pay .card {
+    padding: 40px;
+}
+
+/* pay END */
+
+
+
+/* notification */
+
+
+.notification {
+    padding: 30px 300px;
+}
+
+.notification h4 {
+    font-weight: 400;
+}
+
+.notification .card {
+    padding: 40px;
+}
+
+.notification img {
+    height: 50px;
+}
+
+/* notification END */
+
+
+/* profile */
+
+.profile-page {
+    padding: 30px 70px;
+}
+
+.profile-page h4 {
+    font-weight: 700;
+}
+
+.profile-page .card {
+    padding: 40px;
+}
+
+/* profile END */
+
+
+
+/* my-orders */
+
+.my-orders {
+    padding: 30px 70px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.my-orders h4 {
+    font-weight: 700;
+}
+
+
+/* my-orders END */
+
+
+/* about */
+
+.about {
+    padding: 30px 70px;
+}
+
+.about .card {
+    padding: 40px;
+}
+
+.about h4 {
+    font-weight: 700;
+}
+
+/* about END */
 
 
 @media (max-width: 500px) {

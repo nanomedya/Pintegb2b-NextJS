@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { login } from '../../core';
+import { dealerLogin, login } from '../../core';
 
 export const fetchLogin = createAsyncThunk(
     'login/fetchLogin',
     async ({ email, password }) => {
-        const response = await login(email, password);
+        const response = await dealerLogin(email, password);
         return response;
     }
 );

@@ -14,6 +14,7 @@ const LoginPage = () => {
 
     const getData = async () => {
         const data = await dispatch(fetchLogin({ email: formData.username, password: formData.password }))
+        console.log(data)
         if (data.payload) {
             localStorage.setItem("auth", JSON.stringify(data.payload))
             navigate("/")

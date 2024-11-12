@@ -23,6 +23,8 @@ import NotFoundPage from '../pages/not-found';
 import RegisterPage from '../pages/auth/register';
 import ForgotPasswordPage from '../pages/auth/forgot-password';
 import AuthPage from '../pages/auth';
+import ContactPage from '../pages/contact';
+import AboutPage from '../pages/about';
 
 const AnimatedRoutes = () => {
     const location = useLocation();
@@ -54,6 +56,8 @@ const AnimatedRoutes = () => {
                 <Route path='/notification' element={token === null ? <LoginPage /> : <NotificationPage />} />
                 <Route path='/basket' element={token === null ? <LoginPage /> : <BasketPage />} />
                 <Route path='/basket/completed' element={token === null ? <LoginPage /> : <CompletedPage />} />
+                <Route path='/contact' element={token === null ? <LoginPage /> : <ContactPage />} />
+                <Route path='/about' element={token === null ? <LoginPage /> : <AboutPage />} />
                 <Route path='*' element={token === null ? <LoginPage /> : <NotFoundPage />} />
             </Routes>
         </AnimatePresence>
