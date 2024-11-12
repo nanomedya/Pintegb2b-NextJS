@@ -1,5 +1,5 @@
-import { getUser } from '@/service';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getUser } from '../../core';
 
 export const fetchUser = createAsyncThunk(
     'user/fetchUser',
